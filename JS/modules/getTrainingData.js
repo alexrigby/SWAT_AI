@@ -4,9 +4,13 @@
 export async function getTrainingData(url) {
     //uses tf.csv function to get csv from a url and parses it as a tf dataset
     const csvDataset = getCSVData(url);
+  
+
 
     //calculates the number of features by looking at number of headers ans subtracting 1 (the label header)
     const numberOfFeatures = (await csvDataset.columnNames()).length - 1;
+  
+
 
     // Prepare the Dataset for training by 'flattening the dataset' 
     //xs are the features returend by tf.csv

@@ -17,16 +17,31 @@ export function convertTrainingDataToTensor(trainingData, numberOfFeatures) {
         const inputs = trainingData.map(d => d.xs);
         const labels = trainingData.map(d => d.ys);
 
+        const index = trainingData.map(d  => d.index);
+
         //tensor has a shape of [number of examples, number of features per example]
         const inputTensor = tf.tensor2d(inputs, [inputs.length, numberOfFeatures]);
         const labelTensor = tf.tensor2d(labels, [labels.length, 1]);
-          
+        const inputMax = inputTensor.max(0)
+        const inputMin = inputTensor.min(0)
+        const labelMax = labelTensor.max(0)
+        const labelMin = labelTensor.min(0)
+         
+        const normalizedInputs = inputTensor.sub(inputMin).div(inputMax.sub(inputMin));
+        const normalizedLabels = labelTensor.sub(labelMin).div(labelMax.sub(labelMin));
+
+    
       
         return {
-            trainingInputs: inputTensor,
-            trainingLabels: labelTensor,
-            numberOfFeatures: numberOfFeatures,
-            trainingData: trainingData,
+            trainingInputs: normalizedInputs,
+            trainingLabels: normalizedLabels,
+            normData: {
+            inputMax,
+            inputMin, 
+            labelMax,
+            labelMin,
+            },
+            index: index,
         }
     });
 }
