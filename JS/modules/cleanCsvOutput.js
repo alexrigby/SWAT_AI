@@ -14,6 +14,7 @@ export function cleanCsvOutput(data) {
         d3.autoType
     );
     
+    
     const outputNames = clean.columns.splice(7)
    
     //removes the line which displays units from output data (where there is no name)
@@ -26,6 +27,7 @@ export function cleanCsvOutput(data) {
     //adds index collumn t the data to 'unshuffule' after model
     for (var i=0; i<noUnits.length; i++){
         noUnits[i].index = i;
+   
     };
     
     return {

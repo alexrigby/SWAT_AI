@@ -3,7 +3,7 @@
 export async function trainModel(model, inputs, labels) {
     // Prepare the model for training.
     //'complie the model'
-    //optimize = algorythm that governs updates to the model 
+    //optimize = algorithm that governs updates to the model 
     //loss = tells the model how well it is doing learning
     model.compile({
         optimizer: tf.train.adam(),

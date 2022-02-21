@@ -3,93 +3,18 @@
 // USES TFVIS TO RENDER A SCATERPLOT WITH PREDICTED AND ORIGIONAL VALUES
 
 
-import { getData } from "./getData.js";
-import { convertPredictionInputToTensor } from "./converPredictionInputToTensor.js";
 
 
 
-export async function testModel(model, inputData, trainingData, index) {
-    //gets the label max and min values to un-normalise predictions
-    // const { labelMin, labelMax } = normalizationData;
+export async function testModel(model, inputData, trainingData) {
+  
 
-    // const inputOption = document.getElementById("inputNames").value
-    // const outputOption = document.getElementById("outputNames").value
-   
-    
-    // const predictionInputData = await getData('data/basin_wb_day.csv', inputOption)
-    
-    //converts to tensor
-    // const tensorPredictedInputData = convertPredictionInputToTensor(predictionInputData)
-
-    //extracts array of unnormalized observed flow values 
-    // const unNormPredictionInput = tensorPredictedInputData.unNormPredictionInputs.dataSync()
-    // //normalized observed flow values
-    // const normPredictionInput = tensorPredictedInputData.normPredictionInputs
-
-
-    // const predictionInput = inputData
-
-    //clreates tensor of predictions based on shape of normal observed flow value tensor 
+    //creates tensor of predictions based on training input tensor 
     const preds = tf.tidy(() => {
-        // same shape as to training data ([number of examples, features per example])
         const pred = model.predict(inputData);
-        // unnormalizes the predictions
-        // const unNormPreds = pred
-        //     .mul(labelMax.sub(labelMin))
-        //     .add(labelMin);
-
-        // Un-normalize the data
         const predArray = pred.dataSync();
         return predArray
     });
-
-
-    // // creates array from predictions and observed flow and assignes to x and y axis
-    // const predictedPoints = Array.from(unNormPredictionInput).map((val, i) => {
-    //     return { x: val, y: preds[i] }
-    // });
-
-
-    // //creates array from origial examples and output and assignes to x and y axis
-    // const originalPoints = inputData.map(d => ({
-    //      x: d.x, y: d.y 
-    // }));
-
-
-    // //renders scatterplot with both arrayes plotted
-    // tfvis.render.scatterplot(
-    //     { name: 'Model Predictions vs Original Data', styles: { width: 1000 } },
-    //     { values: [originalPoints, predictedPoints], series: ['original', 'predicted'] },
-    //     {
-    //         xLabel: `${inputOption}`,
-    //         yLabel: `${outputOption}` ,
-    //         height: 300,
-    //         width: 1000,
-    //         seriesColors: ["red", "blue"]
-    //     },
-
-
-    // );
-
-
-    // TRYING TO UNSHUFFLE THE DATA AND PLOT AS A TIME SERIES
-
-    // const inputFlowTimeSeries = tensorPredictedInputData.inputIndex.map(d => ({
-    //     x: d.index, y: d.flow,
-    // }));
-
-    // // This works, plots the flow data as a time series (uses index instead of date for now)
-    // tfvis.render.linechart(
-    //     { name: 'Observed Flow', styles: {width: 1000} },
-    //     { values: [inputFlowTimeSeries], series: ['input flow'] },
-    //     {
-    //         xLabel: 'index',
-    //         yLabel: 'flow',
-    //         height: 300,
-    //         width: 1000,
-    //     }
-    // );
-
 
 
     //adds predicted output and the index to an arrray to be plotted
@@ -97,7 +22,6 @@ export async function testModel(model, inputData, trainingData, index) {
         return { x: d.index, y: preds[i] }
     }).sort((a, b) => a.x - b.x);
     
-    // console.log(predictedVsIndexArray)
 
     //training output data in an array
     const training = trainingData.map(d => d.ys)
@@ -126,10 +50,6 @@ export async function testModel(model, inputData, trainingData, index) {
 
     for (var i = 0; i < preds.length; i++) {
         const difference = diff(predictedVsIndexArray[i].y, trainingVsIndexArray[i].y);
-        // const fractionDiff = (difference / trainingVsIndexArray[i].y)
-       
-        // const percentDiff = (fractionDiff * 100)
-        // console.log(percentDiff)
         let o = {}
         o.y = difference;
         o.x = i;
