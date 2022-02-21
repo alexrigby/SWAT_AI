@@ -1,7 +1,5 @@
 //COMPILES ALL FUNCTIONS TO INITIATE THE MODEL RUNNING AND DISPLAY RESULTS
 
-
-import { getData } from "./getData.js"
 import { createModel } from "./createModel.js"
 import { convertTrainingDataToTensor } from "./convertTrainingDataToTensor.js"
 import { trainModel } from "./trainModel.js"
@@ -36,12 +34,15 @@ export async function run() {
     // );
 
     const tensorTrainingData = await convertTrainingDataToTensor();
-  
+   
+
+    tfvis.visor().toggleFullScreen()
 
     //extracts inputs and lables created in convertToTensor function
     const { inputs, labels, numberOfFeatures, trainingData } = tensorTrainingData;
     // Create the model
     const model = createModel(numberOfFeatures);
+
 
     //modelSummary gives a table to the layers in the model
     tfvis.show.modelSummary({ name: 'Model Summary' }, model);

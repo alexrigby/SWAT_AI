@@ -1,6 +1,6 @@
 
 
-export function getCSVData(csvUrl){
+function getCSVData(csvUrl){
     // const csvConfig = { hasHeader: true}
 const csvDataset = tf.data.csv(
     csvUrl, {
@@ -19,15 +19,22 @@ const csvDataset = tf.data.csv(
 export async function getTrainingData(){
 //uses tf.csv function to get csv from a url and pares it as a tf dataset
 const csvDataset = getCSVData('http://127.0.0.1:5500/server/assets/basin_wb_day.csv');
+
 //calculates the number of features by looking at number of headers ans subtracting 1 (the label header)
 const numberOfFeatures = (await csvDataset.columnNames()).length - 1;
 console.log(numberOfFeatures);
+const columnNames = csvDataset.columnNames()
 
 
 // Prepare the Dataset for training by 'flattening the dataset' 
 //xs are the features returend by tf.csv
 //ys are the labels returned by tf.csv
 const flattenedDataset = csvDataset.map(({ xs, ys }) => {
+
+
+ for (var i = 0; i<columnNames; i++){
+    return xs.columnNames[i].max()
+};
     // Convert xs(features) and ys(labels) from object form (keyed by
     // column name) to array form.
     return { xs: Object.values(xs), ys: Object.values(ys) };
