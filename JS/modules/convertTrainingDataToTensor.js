@@ -26,8 +26,9 @@ export function convertTrainingDataToTensor(trainingData, numberOfFeatures) {
         const inputMin = inputTensor.min(0)
         const labelMax = labelTensor.max(0)
         const labelMin = labelTensor.min(0)
-         
+      
         const normalizedInputs = inputTensor.sub(inputMin).div(inputMax.sub(inputMin));
+        
         const normalizedLabels = labelTensor.sub(labelMin).div(labelMax.sub(labelMin));
 
     

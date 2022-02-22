@@ -13,7 +13,7 @@ export async function run() {
     const { trainingData, numberOfFeatures } = await getTrainingData('http://127.0.0.1:5500/server/assets/basin_wb_day.csv')
 
     //converts the training inputs and lables to tensors to pass to the model
-    const {trainingInputs, trainingLabels, normData, index} = convertTrainingDataToTensor(trainingData, numberOfFeatures);
+    const {trainingInputs, trainingLabels, normData} = convertTrainingDataToTensor(trainingData, numberOfFeatures);
    
 
     tfvis.visor().toggleFullScreen()
@@ -34,7 +34,7 @@ export async function run() {
 
     // Make some predictions using the model and compare them to the
     // original data
-   await testModel(model, trainingInputs, trainingData, normData, index);
+   await testModel(model, trainingInputs, trainingData, normData);
 }
 
 export default {

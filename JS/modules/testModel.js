@@ -6,10 +6,10 @@
 
 
 
-export async function testModel(model, inputData, trainingData, normData, index) {
+export async function testModel(model, inputData, trainingData, normData) {
   
 const {inputMax, inputMin, labelMax, labelMin } = normData
-console.log(normData)
+
     //creates tensor of predictions based on training input tensor 
     const [unNormInputData, preds] = tf.tidy(() => {
         const pred = model.predict(inputData);
@@ -17,7 +17,7 @@ console.log(normData)
         const unNormInput = inputData
         .mul(inputMax.sub(inputMin))
         .add(inputMin);
-
+        
         const unNormPreds = pred
             .mul(labelMax.sub(labelMin))
             .add(labelMin);
@@ -26,23 +26,19 @@ console.log(normData)
         return [unNormInput.dataSync(), unNormPreds.dataSync()]
     });
 
-    console.log(unNormInputData)
     
 
     //adds predicted output and the index to an arrray to be plotted
-    const predictedVsIndexArray = index.map((d, i) => {
-        return { x: d, y: preds[i] }
+    const predictedVsIndexArray = trainingData.map((d, i) => {
+        return { x: d.index, y: preds[i] }
     }).sort((a, b) => a.x - b.x);
-    
-
-    //training output data in an array (use this as alread indexed properly and unnormal(origionalInput))
-    const training = trainingData.map(d => d.ys)
-
+ 
 
     //adds the index and the training output data to an array to be plotted
-    const trainingVsIndexArray = index.map((d, i) => {
-        return { x: d, y: training[i] }
+    const trainingVsIndexArray = trainingData.map((d, i) => {
+        return { x: d.index, y: d.ys }
     }).sort((a, b) => a.x - b.x);
+
 
     //render line chart with both predicted and training output data on it
     tfvis.render.linechart(
