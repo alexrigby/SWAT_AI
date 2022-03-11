@@ -1,20 +1,28 @@
 //COMPILES ALL FUNCTIONS TO INITIATE THE MODEL RUNNING AND DISPLAY RESULTS
 
-import { createModel } from "./createModel.js"
-import { convertTrainingDataToTensor } from "./convertTrainingDataToTensor.js"
-import { trainModel } from "./trainModel.js"
-import { testModel } from "./testModel.js"
-import { getTrainingData } from "./getTrainingData.js"
+import { createModel } from "./createModel.js";
+import { convertTrainingDataToTensor } from "./convertTrainingDataToTensor.js";
+import { trainModel } from "./trainModel.js";
+import { testModel } from "./testModel.js";
+import { getTrainingData } from "./getTrainingData.js";
+import { getInputData } from "./getInputData.js";
+import { convertInputDataToTensor } from "./convertInputDataToTensor.js";
 
 
 export async function run() {
-    
-    //gets the csv from a url, maps data to a array xs: inputs, ys:labels (and returns number of features in the dataset for input shape)
-    const { trainingData, numberOfFeatures } = await getTrainingData('http://127.0.0.1:5500/server/assets/basin_wb_day.csv')
 
+    
+
+    //gets the csv from a url, maps data to a array xs: inputs, ys:labels (and returns number of features in the dataset for input shape)
+    const { trainingData, numberOfFeatures } = await getTrainingData('http://127.0.0.1:5500/server/assets/Erch_training.csv');
+     
+    const inputData = await getInputData('http://127.0.0.1:5500/server/assets/Erch_test.csv');
+  
     //converts the training inputs and lables to tensors to pass to the model
-    const {trainingInputs, trainingLabels, normData} = convertTrainingDataToTensor(trainingData, numberOfFeatures);
-   
+    const { tensorTrainingInputs, tensorTrainingLabels, normTrainingData } = convertTrainingDataToTensor(trainingData, numberOfFeatures);
+    
+    const { tensorInputs, normInputData } = convertInputDataToTensor(inputData, numberOfFeatures);
+    
 
     tfvis.visor().toggleFullScreen()
 
@@ -26,15 +34,15 @@ export async function run() {
     //modelSummary gives a table of the layers in the model
     tfvis.show.modelSummary({ name: 'Model Summary' }, model);
     // Convert the data to a form we can use for training.
-    
-   
+
+
     // Train the model
-    await trainModel(model, trainingInputs, trainingLabels);
+    await trainModel(model, tensorTrainingInputs, tensorTrainingLabels);
     console.log('Done Training');
 
     // Make some predictions using the model and compare them to the
     // original data
-   await testModel(model, trainingInputs, trainingData, normData);
+    await testModel(model, tensorInputs, inputData, trainingData, normTrainingData, normInputData);
 }
 
 export default {

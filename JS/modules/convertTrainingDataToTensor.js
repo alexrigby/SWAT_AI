@@ -34,15 +34,14 @@ export function convertTrainingDataToTensor(trainingData, numberOfFeatures) {
     
       
         return {
-            trainingInputs: normalizedInputs,
-            trainingLabels: normalizedLabels,
-            normData: {
+            tensorTrainingInputs: normalizedInputs,
+            tensorTrainingLabels: normalizedLabels,
+            normTrainingData: {
             inputMax,
             inputMin, 
             labelMax,
             labelMin,
             },
-            index: index,
         }
     });
 }

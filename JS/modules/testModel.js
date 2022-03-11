@@ -6,15 +6,18 @@
 
 
 
-export async function testModel(model, inputData, trainingData, normData) {
+export async function testModel(model, tensorInputs, inputData, trainingData, normTrainingData, normInputData) {
   
-const {inputMax, inputMin, labelMax, labelMin } = normData
+const {labelMax, labelMin } = normTrainingData
+const { inputMax, inputMin } = normInputData
+
+
 
     //creates tensor of predictions based on training input tensor 
     const [unNormInputData, preds] = tf.tidy(() => {
-        const pred = model.predict(inputData);
+        const pred = model.predict(tensorInputs);
         
-        const unNormInput = inputData
+        const unNormInput = tensorInputs
         .mul(inputMax.sub(inputMin))
         .add(inputMin);
         
@@ -26,10 +29,10 @@ const {inputMax, inputMin, labelMax, labelMin } = normData
         return [unNormInput.dataSync(), unNormPreds.dataSync()]
     });
 
-    
+  
 
     //adds predicted output and the index to an arrray to be plotted
-    const predictedVsIndexArray = trainingData.map((d, i) => {
+    const predictedVsIndexArray = inputData.map((d, i) => {
         return { x: d.index, y: preds[i] }
     }).sort((a, b) => a.x - b.x);
  
@@ -43,7 +46,7 @@ const {inputMax, inputMin, labelMax, labelMin } = normData
     //render line chart with both predicted and training output data on it
     tfvis.render.linechart(
         { name: 'training and predicted data', styles: { width: 1000 } },
-        { values: [predictedVsIndexArray, trainingVsIndexArray], series: ["predicted", "training"], styles: { color: ["rgba(255, 0, 0, 0.5)", "rgba(0, 0, 255, 0.5)"] } },
+        { values: [ trainingVsIndexArray, predictedVsIndexArray], series: [ "training", "predicted" ], styles: { color: ["rgba(255, 0, 0, 0.5)", "rgba(0, 0, 255, 0.5)"] } },
         {
             xLabel: 'index',
             yLabel: 'flow',

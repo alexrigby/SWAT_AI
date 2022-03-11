@@ -1,4 +1,5 @@
 import { run } from "./modules/run.js";
+import { getInputData } from "./modules/getInputData.js";
 
 
 
