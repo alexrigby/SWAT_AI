@@ -7,10 +7,10 @@ export async function trainModel(model, tensorTrainingInputs, tensorTrainingLabe
     //loss = tells the model how well it is doing learning
     model.compile({
         optimizer: tf.train.adam(),
-        loss: tf.losses.meanSquaredError,
+        loss: [tf.losses.meanSquaredError],
         metrics: ['mse'],
     });
-
+    
     //number of examples per batch (model fed 32 examples each itteration)
     const batchSize = 32;
     //number of times model looks at entire dataset
@@ -23,13 +23,13 @@ export async function trainModel(model, tensorTrainingInputs, tensorTrainingLabe
         shuffle: true,
         // callbacks to monitor the training progress, rendered as plot with tfvis
         callbacks: tfvis.show.fitCallbacks(
-            { name: 'Training Performance', styles: {width: 1000} },
-            ['mse'],
+            { name: 'Training Performance', styles: { width: 1000 } },
+            ["mse"],
             { height: 200, width: 1000, callbacks: ['onEpochEnd'] }
         )
     });
 }
 
 export default {
- trainModel,
+    trainModel,
 }

@@ -3,9 +3,6 @@
 // USES TFVIS TO RENDER A SCATERPLOT WITH PREDICTED AND ORIGIONAL VALUES
 
 
-
-
-
 export async function testModel(model, tensorInputs, inputData, trainingData, normTrainingData, normInputData) {
   
 const {labelMax, labelMin } = normTrainingData

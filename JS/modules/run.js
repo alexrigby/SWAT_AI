@@ -14,9 +14,9 @@ export async function run() {
     
 
     //gets the csv from a url, maps data to a array xs: inputs, ys:labels (and returns number of features in the dataset for input shape)
-    const { trainingData, numberOfFeatures } = await getTrainingData('http://127.0.0.1:5500/server/assets/Erch_training.csv');
+    const { trainingData, numberOfFeatures } = await getTrainingData('http://127.0.0.1:5500/server/assets/out_2001.csv');
      
-    const inputData = await getInputData('http://127.0.0.1:5500/server/assets/Erch_test.csv');
+    const inputData = await getInputData('http://127.0.0.1:5500/server/assets/out_2001_noFlow.csv');
   
     //converts the training inputs and lables to tensors to pass to the model
     const { tensorTrainingInputs, tensorTrainingLabels, normTrainingData } = convertTrainingDataToTensor(trainingData, numberOfFeatures);
