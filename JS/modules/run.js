@@ -33,11 +33,10 @@ export async function run() {
 
     //modelSummary gives a table of the layers in the model
     tfvis.show.modelSummary({ name: 'Model Summary' }, model);
-    // Convert the data to a form we can use for training.
 
-
+    tfvis.show.layer({name: 'Layer Summary'}, model)
     // Train the model
-    await trainModel(model, tensorTrainingInputs, tensorTrainingLabels);
+    await trainModel(model, tensorTrainingInputs, tensorTrainingLabels, normTrainingData);
     console.log('Done Training');
 
     // Make some predictions using the model and compare them to the

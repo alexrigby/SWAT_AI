@@ -9,7 +9,7 @@ export function createModel(numberOfInputs) {
 
     // ReLU gives  better fit than sigmoid 
     //    model.add(tf.layers.dense({units: 50, activation: 'sigmoid'}));
-    model.add(tf.layers.dense({units: 5, activation: 'ReLU'}));
+    model.add(tf.layers.dense({units: 10, activation: 'ReLU'}));
 
     // Add an output layer
     model.add(tf.layers.dense({ units: 1, useBias: true }));
