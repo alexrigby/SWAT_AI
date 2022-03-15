@@ -40,6 +40,13 @@ const { inputMax, inputMin } = normInputData
     }).sort((a, b) => a.x - b.x);
 
 
+    const date = trainingData.map((d) => {
+          return {date: new Date(d.xs[4] + '-' + d.xs[5] + '-' + d.xs[6]),
+                  index: d.index
+        }
+        });
+
+
     //render line chart with both predicted and training output data on it
     tfvis.render.linechart(
         { name: 'training and predicted data', styles: { width: 1000 } },
