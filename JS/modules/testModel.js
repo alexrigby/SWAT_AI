@@ -21,7 +21,8 @@ const { inputMax, inputMin } = normInputData
         const unNormPreds = pred
             .mul(labelMax.sub(labelMin))
             .add(labelMin);
-
+       
+            tensorInputs.min().print()
     
         return [unNormInput.dataSync(), unNormPreds.dataSync()]
     });
@@ -82,9 +83,41 @@ const { inputMax, inputMin } = normInputData
             width: 1000
         }
     );
+
+// var predArray = Array.from(predictedVsIndexArray)
+
+var csv = TsvOrCsvConverter(predictedVsIndexArray, ',')
+
+
+console.log(csv)
+
+    
+
+    
+
+downloadflow(preds, 'ML predicted flow')
+
 }
 
+export function TsvOrCsvConverter(data, seperator) {
+    // Convert dataset to TSV and print
+    const headers = Object.keys(data[0]);
+    const csv = [
+      headers.join(seperator),
+      ...data.map(row => headers.map(fieldName => row[fieldName]).join(seperator))
+    ].join('\r\n');
+    return csv;
+  }
 
+
+//makes button to download csv file to downloads folder
+function downloadflow(data, fileName) {
+    document
+      .getElementById("download")
+      .setAttribute("href", "data:text/csv;charset=utf-8," + escape(data));
+    document.getElementById("download").setAttribute("download", fileName);
+  }
+  
 //function to calculate the diffenrence between 2 numbers
 function diff(num1, num2) {
     return num1 - num2

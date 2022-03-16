@@ -16,10 +16,9 @@ export async function trainModel(model, tensorTrainingInputs, tensorTrainingLabe
     //number of examples per batch (model fed 32 examples each itteration)
     const batchSize = 32;
     //number of times model looks at entire dataset
-    const epochs = 4;
-
+    const epochs = 15;
+    //placeholder for rmse 
     const trainLogs = [];
-
     const rmse = { name: 'Training Performance (RMSE)', styles: { width: 1000} };
     const rrse = { name: 'Training Performance (MAE)', styles: { width: 1000} };
     //model.fit is a function to start the training loop
@@ -46,15 +45,14 @@ export async function trainModel(model, tensorTrainingInputs, tensorTrainingLabe
                     ['mae'],
                     { height: 200, width: 1000, callbacks: ['onEpochEnd'] }
                 )
-
-            }
-            
+            }      
         }
     });
     console.log(hs.history)
     return hs
 
 }
+
 
 
 // unNormalises the loss values so they are easier to interpret 
