@@ -21,23 +21,10 @@ export function convertInputDataToTensor(inputData, numberOfInputFeatures) {
 
         //tensor has a shape of [number of examples, number of features per example]
         const inputTensor = tf.tensor2d(inputs, [inputs.length, numberOfInputFeatures]);
-    
-        const inputMax = inputTensor.max(0)
-        const inputMin = inputTensor.min(0)
-      
-        const normalizedInputs = inputTensor.sub(inputMin).div(inputMax.sub(inputMin));
-        
 
+
+        return inputTensor
     
-      
-        return {
-            tensorInputs: normalizedInputs,
-            normInputData: {
-            inputMax,
-            inputMin, 
-            },
-            inputIndex: index,
-        }
     });
 }
 

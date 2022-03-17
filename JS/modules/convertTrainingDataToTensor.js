@@ -1,5 +1,6 @@
 // /**CONVERTS THETRAINING DATA TO TENSOR
 
+
 export function convertTrainingDataToTensor(trainingData, numberOfFeatures) {
     // Wrapping these calculations in a tidy will dispose any
     // intermediate tensors.
@@ -22,26 +23,14 @@ export function convertTrainingDataToTensor(trainingData, numberOfFeatures) {
         //tensor has a shape of [number of examples, number of features per example]
         const inputTensor = tf.tensor2d(inputs, [inputs.length, numberOfFeatures]);
         const labelTensor = tf.tensor2d(labels, [labels.length, 1]);
-        const inputMax = inputTensor.max(0)
-        const inputMin = inputTensor.min(0)
-        const labelMax = labelTensor.max(0)
-        const labelMin = labelTensor.min(0)
-      
-        const normalizedInputs = inputTensor.sub(inputMin).div(inputMax.sub(inputMin));
-        
-        const normalizedLabels = labelTensor.sub(labelMin).div(labelMax.sub(labelMin));
+    
 
     
       
         return {
-            tensorTrainingInputs: normalizedInputs,
-            tensorTrainingLabels: normalizedLabels,
-            normTrainingData: {
-            inputMax,
-            inputMin, 
-            labelMax,
-            labelMin,
-            },
+            tensorTrainingInputs: inputTensor,
+            tensorTrainingLabels: labelTensor,
+     
         }
     });
 }

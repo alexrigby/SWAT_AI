@@ -3,27 +3,16 @@
 // USES TFVIS TO RENDER A SCATERPLOT WITH PREDICTED AND ORIGIONAL VALUES
 
 
-export async function testModel(model, tensorInputs, inputData, trainingData, normTrainingData, normInputData) {
+export async function testModel(model, tensorInputs, inputData, trainingData) {
   
-const {labelMax, labelMin } = normTrainingData
-const { inputMax, inputMin } = normInputData
 
 
 
     //creates tensor of predictions based on training input tensor 
-    const [unNormInputData, preds] = tf.tidy(() => {
+    const  preds = tf.tidy(() => {
         const pred = model.predict(tensorInputs);
-        
-        const unNormInput = tensorInputs
-        .mul(inputMax.sub(inputMin))
-        .add(inputMin);
-        
-        const unNormPreds = pred
-            .mul(labelMax.sub(labelMin))
-            .add(labelMin);
-
     
-        return [unNormInput.dataSync(), unNormPreds.dataSync()]
+        return pred.dataSync()
     });
 
   

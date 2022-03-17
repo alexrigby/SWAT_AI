@@ -19,9 +19,9 @@ export async function run() {
     const inputData = await getInputData('http://127.0.0.1:5500/server/assets/Erch_val_mm_day.csv');
   
     //converts the training inputs and lables to tensors to pass to the model
-    const { tensorTrainingInputs, tensorTrainingLabels, normTrainingData } = convertTrainingDataToTensor(trainingData, numberOfFeatures);
+    const { tensorTrainingInputs, tensorTrainingLabels } = convertTrainingDataToTensor(trainingData, numberOfFeatures);
     
-    const { tensorInputs, normInputData } = convertInputDataToTensor(inputData, numberOfFeatures);
+    const  tensorInputs = convertInputDataToTensor(inputData, numberOfFeatures);
     
 
     tfvis.visor().toggleFullScreen()
@@ -36,12 +36,12 @@ export async function run() {
 
     tfvis.show.layer({name: 'Layer Summary'}, model)
     // Train the model
-    await trainModel(model, tensorTrainingInputs, tensorTrainingLabels, normTrainingData);
+    await trainModel(model, tensorTrainingInputs, tensorTrainingLabels );
     console.log('Done Training');
 
     // Make some predictions using the model and compare them to the
     // original data
-    await testModel(model, tensorInputs, inputData, trainingData, normTrainingData, normInputData);
+    await testModel(model, tensorInputs, inputData, trainingData);
 }
 
 export default {

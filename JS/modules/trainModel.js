@@ -1,8 +1,8 @@
 //MODEL LOOKS AT EXAMPLE DATA AND TRAINS ITSELF FROM IT
 
 
-export async function trainModel(model, tensorTrainingInputs, tensorTrainingLabels, normTrainingData) {
-    const { labelMin, labelMax } = normTrainingData;
+export async function trainModel(model, tensorTrainingInputs, tensorTrainingLabels) {
+    
     // Prepare the model for training.
     //'complie the model'
     //optimize = algorithm that governs updates to the model 
@@ -33,8 +33,8 @@ export async function trainModel(model, tensorTrainingInputs, tensorTrainingLabe
             onEpochEnd: async (epoch, logs) => {
                 //at the end of each epoch unNormalise the mse, find its squroot, push it to the object 'trainLogs'
                 trainLogs.push({
-                    rmse: unNormLoss(Math.sqrt(logs.loss), labelMax, labelMin),
-                    mae: unNormLoss(logs.meanAbsoluteError, labelMax, labelMin)
+                    rmse: Math.sqrt(logs.loss), 
+                    mae: logs.meanAbsoluteError,
                     // val_rmse: unNormLoss(Math.sqrt(logs.val_loss), labelMax, labelMin)
                 });
                // show.history plots either history, or 'history like object'.
@@ -51,23 +51,11 @@ export async function trainModel(model, tensorTrainingInputs, tensorTrainingLabe
             
         }
     });
-    console.log(hs.history)
+  
     return hs
 
 }
 
-
-// unNormalises the loss values so they are easier to interpret 
-function unNormLoss(normLoss, labelMax, labelMin){
-
-const normLossTensor = tf.tensor1d([normLoss])
-const unNormLoss = normLossTensor
-.mul(labelMax.sub(labelMin))
-.add(labelMin);
-
-return unNormLoss.arraySync()
-
-}
 
 
 
