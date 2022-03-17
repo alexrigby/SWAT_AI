@@ -16,7 +16,7 @@ export async function trainModel(model, tensorTrainingInputs, tensorTrainingLabe
     //number of examples per batch (model fed 32 examples each itteration)
     const batchSize = 32;
     //number of times model looks at entire dataset
-    const epochs = 40;
+    const epochs = 100;
 
     const trainLogs = [];
 

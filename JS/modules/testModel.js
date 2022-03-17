@@ -71,7 +71,26 @@ export async function testModel(model, tensorInputs, inputData, trainingData) {
             width: 1000
         }
     );
+
+    var csv = TsvOrCsvConverter(predictedVsIndexArray, ',')
+
+
+    console.log(csv)
+
 }
+
+
+
+
+export function TsvOrCsvConverter(data, seperator) {
+    // Convert dataset to TSV and print
+    const headers = Object.keys(data[0]);
+    const csv = [
+      headers.join(seperator),
+      ...data.map(row => headers.map(fieldName => row[fieldName]).join(seperator))
+    ].join('\r\n');
+    return csv;
+  }
 
 
 //function to calculate the diffenrence between 2 numbers
