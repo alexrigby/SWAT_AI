@@ -14,9 +14,9 @@ export async function run() {
     
 
     //gets the csv from a url, maps data to a array xs: inputs, ys:labels (and returns number of features in the dataset for input shape)
-    const { trainingData, numberOfFeatures } = await getTrainingData('http://127.0.0.1:5500/server/assets/16C_mm.csv');
+    const { trainingData, numberOfFeatures } = await getTrainingData('http://127.0.0.1:5500/server/assets/16C_mm_noTmp.csv');
      
-    const inputData = await getInputData('http://127.0.0.1:5500/server/assets/Dwyfor_noFlow_val.csv');
+    const inputData = await getInputData('http://127.0.0.1:5500/server/assets/Dwyfor_noFlow_val_noTmp.csv');
   
     //converts the training inputs and lables to tensors to pass to the model
     const { tensorTrainingInputs, tensorTrainingLabels } = convertTrainingDataToTensor(trainingData, numberOfFeatures);
