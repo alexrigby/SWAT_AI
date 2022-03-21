@@ -1,13 +1,19 @@
-import { run } from "./modules/run.js";
-import { getInputData } from "./modules/getInputData.js";
-
+import { runTraining } from "./modules/runTraining.js";
+import { runPrediction } from "./modules/runPrediction.js"
 
 
 // document.addEventListener('DOMContentLoaded', await getData());
-document.getElementById("run").addEventListener("click", () => {
-    run();
-});
-// document.getElementById("outputNames").addEventListener("change", run())
+
+    document.getElementById("train").addEventListener("click", async () => {
+        await runTraining();
+    });
+
+
+
+
+document.getElementById("predict").addEventListener("click", async () => {
+    await runPrediction();
+})
 
 
 

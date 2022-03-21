@@ -5,11 +5,11 @@ export function createModel(numberOfInputs) {
     const model = tf.sequential();
 
     // Add a single input layer
-    model.add(tf.layers.dense({ inputShape: [numberOfInputs], units: 20, activation: 'ReLU', useBias: true,}));
+    model.add(tf.layers.dense({ inputShape: [numberOfInputs], units: 22, useBias: true, activation: 'ReLU'}));
 
     // ReLU gives  better fit than sigmoid 
     //    model.add(tf.layers.dense({units: 50, activation: 'sigmoid'}));
-    model.add(tf.layers.dense({units: 16, activation: 'ReLU'}));
+    model.add(tf.layers.dense({units: 14, activation: 'ReLU'}));
 
     // Add an output layer
     model.add(tf.layers.dense({ units: 1, useBias: true }));

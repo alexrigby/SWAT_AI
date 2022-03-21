@@ -17,10 +17,12 @@ export function convertInputDataToTensor(inputData, numberOfInputFeatures) {
         //xs values are the inputs and ys are lables from 'trainingData' (in 'run.js')
         const inputs = inputData.map(d => d.xs);
         const index = inputData.map(d  => d.index);
-        
+        console.log(inputs.length)
 
         //tensor has a shape of [number of examples, number of features per example]
         const inputTensor = tf.tensor2d(inputs, [inputs.length, numberOfInputFeatures]);
+
+        inputTensor.print()
 
 
         return inputTensor

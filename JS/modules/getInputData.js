@@ -5,7 +5,7 @@ export async function getInputData(url) {
     //uses tf.csv function to get csv from a url and parses it as a tf dataset
     const csvDataset = getCSVData(url);
 
-
+   const numberOfFeatures = (await csvDataset.columnNames()).length
     // Prepare the Dataset for training by 'flattening the dataset' 
     //xs are the features returend by tf.csv (no labels selected)
     const flattenedDataset = csvDataset.map((xs) => {
@@ -22,7 +22,10 @@ export async function getInputData(url) {
         arrayFromDatset[i].index = i;
     };
    
-    return  arrayFromDatset
+    return { 
+        inputData: arrayFromDatset, 
+        numberOfInputFeatures: numberOfFeatures,
+    }
 };
 
 //uses tf.csv to return dataset from csv url, no label selected
@@ -31,6 +34,7 @@ function getCSVData(csvUrl) {
         csvUrl,
     )
     return csvDataset
+        
 };
 
 
