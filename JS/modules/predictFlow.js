@@ -3,10 +3,10 @@
 // USES TFVIS TO RENDER A SCATERPLOT WITH PREDICTED AND ORIGIONAL VALUES
 
 
-export async function predictFlow(model, tensorInputs, inputData) {
-  
+export async function predictFlow(model, tensorInputs, inputData, inputCatchment) {
+
     //creates tensor of predictions based on training input tensor 
-    const  preds = tf.tidy(() => {
+    const preds = tf.tidy(() => {
         const pred = model.predict(tensorInputs);
         return pred.dataSync()
     });
@@ -17,24 +17,24 @@ export async function predictFlow(model, tensorInputs, inputData) {
         return { x: d.index, y: preds[i] }
     }).sort((a, b) => a.x - b.x);
 
+    const predictedVsDate = inputData.map((d, i) => {
+        return {
+            index: d.index, 
+            predictedFlow: preds[i],
+            date: d.xs[5] + '/' + d.xs[4] + '/' + d.xs[6],
+        }  
+    }) .sort((a, b) => a.index - b.index);
     // return { x: d.xs[5] + '/' + d.xs[4] + '/' + d.xs[6], y: preds[i], index: d.index }
 
     const SWATFlow = inputData.map((d) => {
-       return { x: d.index , y: d.xs[20] }
-    }).sort((a ,b) => a.x - b.x);
-        console.log(inputData)
-
-    // const date = trainingData.map((d) => {
-    //       return {date: new Date(d.xs[4] + '-' + d.xs[5] + '-' + d.xs[6]),
-    //               index: d.index
-    //     }
-    //     });
-
+        return { x: d.index, y: d.xs[20] }
+    }).sort((a, b) => a.x - b.x);
+    console.log(inputData)
 
     //render line chart with both predicted and training output data on it
     tfvis.render.linechart(
-        { name: 'Uncalibrated SWAT+ vs ML Predictions', styles: { width: 1000 } },
-        { values: [ predictedVsIndexArray, SWATFlow], series: [ "predicted", "SWAT Uncalibrated" ], styles: { color: ["rgba(255, 0, 0, 0.5)", "rgba(0, 0, 255, 0.5)"] } },
+        { name: inputCatchment , styles: { width: 1000 } },
+        { values: [predictedVsIndexArray, SWATFlow], series: ["predicted", "SWAT Uncalibrated"], styles: { color: ["rgba(255, 0, 0, 0.5)", "rgba(0, 0, 255, 0.5)"] } },
         {
             xLabel: 'index',
             yLabel: 'flow mm/day',
@@ -43,39 +43,21 @@ export async function predictFlow(model, tensorInputs, inputData) {
         }
     );
 
-    // //calculates the difference between the predicted points and the training points,
-    // //creates an array of difference and index to be plotted
-    // const differenceArray = []
 
-    // for (var i = 0; i < preds.length; i++) {
-    //     const difference = diff(predictedVsIndexArray[i].y, trainingVsIndexArray[i].y);
-    //     let o = {}
-    //     o.y = difference;
-    //     o.x = i;
-    //     differenceArray.push(o)
-    // }
 
-    // //plots the difference between the predicted and training
-    // tfvis.render.linechart(
-    //     { name: 'predicted data - training data', styles: { width: 1000 } },
-    //     { values: [differenceArray] },
-    //     {
-    //         xLable: 'index',
-    //         yLabel: 'difference',
-    //         height: 300,
-    //         width: 1000
-    //     }
-    // );
 
-    
-    for (let i = 0; i< predictedVsIndexArray.length; i++) {
+    for (let i = 0; i < predictedVsIndexArray.length; i++) {
         if (predictedVsIndexArray[i].x < 0) {
             return predictedVsIndexArray[i].x == 0
         }
     }
-    
-    var csv = TsvOrCsvConverter(predictedVsIndexArray, ',')
 
+    var csv = TsvOrCsvConverter(predictedVsDate, ',')
+
+    const downloadButton = document.getElementById("downloadPreds");
+    downloadButton.addEventListener("click", () => {
+        downloadPredictionsCSV(csv, "predictions")
+    });
 
     console.log(csv)
 
@@ -83,16 +65,24 @@ export async function predictFlow(model, tensorInputs, inputData) {
 
 
 
+//makes button to download csv file to downloads folder
+function downloadPredictionsCSV(data, fileName) {
+    document
+        .getElementById("downloadPreds")
+        .setAttribute("href", "data:text/csv;charset=utf-8," + escape(data));
+    document.getElementById("downloadPreds").setAttribute("download", fileName);
+}
 
-export function TsvOrCsvConverter(data, seperator) {
+
+function TsvOrCsvConverter(data, seperator) {
     // Convert dataset to TSV and print
     const headers = Object.keys(data[0]);
     const csv = [
-      headers.join(seperator),
-      ...data.map(row => headers.map(fieldName => row[fieldName]).join(seperator))
+        headers.join(seperator),
+        ...data.map(row => headers.map(fieldName => row[fieldName]).join(seperator))
     ].join('\r\n');
     return csv;
-  }
+}
 
 
 //function to calculate the diffenrence between 2 numbers

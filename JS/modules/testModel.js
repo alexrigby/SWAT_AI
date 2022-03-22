@@ -89,8 +89,7 @@ export async function testModel(model, tensorInputs, inputData, trainingData) {
 
 
 
-
-export function TsvOrCsvConverter(data, seperator) {
+function TsvOrCsvConverter(data, seperator) {
     // Convert dataset to TSV and print
     const headers = Object.keys(data[0]);
     const csv = [
@@ -99,17 +98,6 @@ export function TsvOrCsvConverter(data, seperator) {
     ].join('\r\n');
     return csv;
   }
-
-
-//function to calculate the diffenrence between 2 numbers
-function diff(num1, num2) {
-    return num1 - num2
-    // if (num1 > num2) {
-    //     return num1 - num2
-    // } else {
-    //     return num2 - num1
-    // }
-}
 
 
 export default {
