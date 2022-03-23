@@ -48,8 +48,14 @@
     </div>
 
     <div id="predictionPage" class="tabContent">
+       
+      <label title="model: number of catchments trained on_number of training epochs_1st input layer nodes_2nd input layer nodes" for ="model">Select Model</label>
+      <select name ="model" id="model"></select><br><br>
 
+      <label title="catchment name_model period" for="inputFile">Select Catchment</label>
       <select name="inputFile" id="inputFile"></select> 
+
+     
 
       <button type="button" id="predict"> predict </button> <br> <br>
       <a class="downloadPreds" id="downloadPreds">Download Predictions </a>

@@ -4,6 +4,7 @@ const cors = require("cors");
 const { config } = require("./config");
 const {
     getInputs,
+    getModels,
 } = require("./api");
 
 const app = express();
@@ -14,9 +15,11 @@ app.use(express.json({ limit: "50mb" }));
 
 app.get("/getinputs", (_, res) => {
     res.send(getInputs());
-})
+});
 
-
+app.get("/getmodels", (_, res) => {
+    res.send(getModels());
+});
 
 
 

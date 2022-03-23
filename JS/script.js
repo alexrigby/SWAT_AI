@@ -1,6 +1,9 @@
 import { runTraining } from "./modules/runTraining.js";
 import { runPrediction } from "./modules/runPrediction.js";
 import { getInputCatchment } from "./modules/getInputCatchment.js";
+import { getModels } from "./modules/getModels.js";
+
+await getModels()
 
 await getInputCatchment()
 
