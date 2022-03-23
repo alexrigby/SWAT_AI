@@ -41,24 +41,85 @@
 
     <div id="trainingPage" class="tabContent">
 
-      <label for="trainingDatasets" title="training dataset: number of catchments_number of years"> Choose training Dataset</label> 
-      <select name ="trainingDatasets" id="trainingDatasets"></select> <br> <br>
+      <div class="modelDesign">
+        <h2>Model Architecture</h2>
+        <label for="Epochs">Epochs</label>
+        <input type="number" id="epochs" value="50"> <br> <br>
+        <label for="">Input Layer</label> <br>
+        <label for="inputNodes">Nodes</label>
+        <input type="number" id="inputNodes" value="22"> <br>
+        <label for="InputActivation">Activation</label>
+        <select name="inputActivation" id="inputActivation">
+          <option value="ReLU" selected>ReLU</option>
+          <option value="sigmoid">sigmoid</option>
+          <option value="relu6">relu6</option>
+          <option value="elu">elu</option>
+          <option value="hardSigmoid">hardSigmoid</option>
+          <option value="linear">linear</option>
+          <option value="selu">selu</option>
+          <option value="softmax">softmax</option>
+          <option value="softplus">softplus</option>
+          <option value="softsign">softsign</option>
+          <option value="tanh">tanh</option>
+          <option value="swish">swish</option>
+          <option value="mish">mish</option>
+        </select> <br> <br>
+
+        <label for="">Hidden Layer</label> <br>
+        <label for="hiddenNodes">Nodes</label>
+        <input type="number" id="hiddenNodes" value="14"> <br>
+        <label for="hiddeActivation">Activation</label>
+        <select name="hiddenActivation" id="hiddenActivation">
+          <option value="ReLU" selected>ReLU</option>
+          <option value="sigmoid">sigmoid</option>
+          <option value="relu6">relu6</option>
+          <option value="elu">elu</option>
+          <option value="hardSigmoid">hardSigmoid</option>
+          <option value="linear">linear</option>
+          <option value="selu">selu</option>
+          <option value="softmax">softmax</option>
+          <option value="softplus">softplus</option>
+          <option value="softsign">softsign</option>
+          <option value="tanh">tanh</option>
+          <option value="swish">swish</option>
+          <option value="mish">mish</option>
+        </select>
+
+        <h2>Validation</h2>
+        <label for="validationSplit">Validation Split (Fraction of Dataset)</label> <br>
+        <input type="number" id="validationSplit" min="0.0" max="0.9" step="0.1" value="0.1">
+
+
+
+      </div>
+
+      <label for="trainingDatasets" title="training dataset: number of catchments_number of years"> Choose training
+        Dataset</label>
+      <select name="trainingDatasets" id="trainingDatasets"></select> <br> <br>
 
       <input type="text" id="modelName" value="-- Model Name --"> <button type="button" id="train">train</button> <br>
       <br>
+
+
+      <h2>Accuracy</h2>
+      <p id="modelAcuracy"></p> <br> <br>
+
       <button type="button" id="save"> Save Trained Model </button> <br> <br>
 
     </div>
 
     <div id="predictionPage" class="tabContent">
-       
-      <label title="model: number of catchments trained on_number of training epochs_1st input layer nodes_2nd input layer nodes" for ="model">Select Model</label>
-      <select name ="model" id="model"></select><br><br>
+
+
+      <label
+        title="model: number of catchments trained on_number of training epochs_1st input layer nodes_2nd input layer nodes"
+        for="model">Select Model</label>
+      <select name="model" id="model"></select><br><br>
 
       <label title="catchment name_model period" for="inputFile">Select Catchment</label> <br><br>
-      <select name="inputFile" id="inputFile"></select> 
+      <select name="inputFile" id="inputFile"></select>
 
-     
+
 
       <button type="button" id="predict"> predict </button> <br> <br>
       <a class="downloadPreds" id="downloadPreds">Download Predictions </a>

@@ -2,6 +2,8 @@
 
 
 export async function trainModel(model, tensorTrainingInputs, tensorTrainingLabels) {
+
+    const valSplit = document.getElementById("validationSplit").value
     
     // Prepare the model for training.
     //'complie the model'
@@ -16,7 +18,8 @@ export async function trainModel(model, tensorTrainingInputs, tensorTrainingLabe
     //number of examples per batch (model fed 32 examples each itteration)
     const batchSize = 32;
     //number of times model looks at entire dataset
-    const epochs = 1;
+    // const epochs = 2;
+    const epochs = document.getElementById("epochs").value
 
     const trainLogs = [];
 
@@ -27,23 +30,24 @@ export async function trainModel(model, tensorTrainingInputs, tensorTrainingLabe
         batchSize,
         epochs,
         shuffle: true,
-        // validationSplit: 0.1,
+        validationSplit: valSplit,
         // callbacks to monitor the training progress, rendered as plot with tfvis
         callbacks: {
             onEpochEnd: async (epoch, logs) => {
                 //at the end of each epoch unNormalise the mse, find its squroot, push it to the object 'trainLogs'
                 trainLogs.push({
-                    rmse: Math.sqrt(logs.loss), 
+                    rmse: Math.sqrt(logs.loss),
+                    validation_rmse: Math.sqrt(logs.val_loss), 
                     mae: logs.meanAbsoluteError,
-                    // val_rmse: unNormLoss(Math.sqrt(logs.val_loss), labelMax, labelMin)
+                    validation_mae: logs.val_meanAbsoluteError,
                 });
                // show.history plots either history, or 'history like object'.
-                tfvis.show.history(rmse, trainLogs,
-                    ['rmse'],
+                tfvis.show.history(rmse,  trainLogs,
+                    ['rmse', 'validation_rmse'],
                     { height: 200, width: 1000, callbacks: ['onEpochEnd'] }
                 )
                 tfvis.show.history(rrse, trainLogs,
-                    ['mae'],
+                    ['mae', 'validation_mae'],
                     { height: 200, width: 1000, callbacks: ['onEpochEnd'] }
                 )
 
@@ -51,6 +55,19 @@ export async function trainModel(model, tensorTrainingInputs, tensorTrainingLabe
             
         }
     });
+
+    console.log(hs.history)
+    console.log(trainLogs)
+
+    const valRMSE = trainLogs[epochs -1].validation_rmse
+    const trainRMSE = trainLogs[epochs -1].rmse
+    const valMAE = trainLogs[epochs -1].validation_mae
+    const trainMAE = trainLogs[epochs -1].mae
+
+    document.getElementById("modelAcuracy").innerHTML = `Validation RMSE:  ${valRMSE} <br>
+    Training RMSE: ${trainRMSE} <br>
+    Validation MAE: ${valMAE} <br>
+    Training MAE: ${trainMAE}`
   
     return hs
 

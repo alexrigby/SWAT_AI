@@ -3,25 +3,8 @@
 // USES TFVIS TO RENDER A SCATERPLOT WITH PREDICTED AND ORIGIONAL VALUES
 
 
-export async function testModel(model, tensorInputs, inputData, trainingData) {
+export async function testModel(model,  trainingData) {
   
-
-
-
-    // //creates tensor of predictions based on training input tensor 
-    // const  preds = tf.tidy(() => {
-    //     const pred = model.predict(tensorInputs);
-    
-    //     return pred.dataSync()
-    // });
-
-  
-
-    // //adds predicted output and the index to an arrray to be plotted
-    // const predictedVsIndexArray = inputData.map((d, i) => {
-    //     return { x: d.index, y: preds[i] }
-    // }).sort((a, b) => a.x - b.x);
- 
 
     //adds the index and the training output data to an array to be plotted
     const trainingVsIndexArray = trainingData.map((d, i) => {
