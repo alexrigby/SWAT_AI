@@ -7,22 +7,24 @@ import { testModel } from "./testModel.js";
 import { getTrainingData } from "./getTrainingData.js";
 import { getInputData } from "./getInputData.js";
 import { convertInputDataToTensor } from "./convertInputDataToTensor.js";
+import config from "./config.js"
 
 
 export async function runTraining() {
-
+ 
+    const trainingDataset = document.getElementById("trainingDatasets").value
 
     //gets the csv from a url, maps data to a array xs: inputs, ys:labels (and returns number of features in the dataset for input shape)
-    const { trainingData, numberOfFeatures } = await getTrainingData('http://127.0.0.1:5500/server/assets/11c_uncalibrated.csv');
+    const { trainingData, numberOfFeatures } = await getTrainingData(`${config.TRAINING_DATASETS}${trainingDataset}`);
 
 
-    const { inputData, numberOfInputFeatures } = await getInputData('http://127.0.0.1:5500/server/assets/Dwyfor_2005.csv');
+    // const { inputData, numberOfInputFeatures } = await getInputData('http://127.0.0.1:5500/server/assets/Dwyfor_2005.csv');
 
     //converts the training inputs and lables to tensors to pass to the model
     const { tensorTrainingInputs, tensorTrainingLabels } = convertTrainingDataToTensor(trainingData, numberOfFeatures);
 
 
-    const tensorInputs = convertInputDataToTensor(inputData, numberOfInputFeatures);
+    // const tensorInputs = convertInputDataToTensor(inputData, numberOfInputFeatures);
 
 
     tfvis.visor().toggleFullScreen()

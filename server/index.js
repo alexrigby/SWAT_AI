@@ -5,6 +5,7 @@ const { config } = require("./config");
 const {
     getInputs,
     getModels,
+    getTrainingDatasets,
 } = require("./api");
 
 const app = express();
@@ -19,6 +20,10 @@ app.get("/getinputs", (_, res) => {
 
 app.get("/getmodels", (_, res) => {
     res.send(getModels());
+});
+
+app.get("/gettrainingdatasets", (_, res) => {
+    res.send(getTrainingDatasets());
 });
 
 

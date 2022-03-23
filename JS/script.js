@@ -1,11 +1,14 @@
 import { runTraining } from "./modules/runTraining.js";
 import { runPrediction } from "./modules/runPrediction.js";
-import { getInputCatchment } from "./modules/getInputCatchment.js";
+import { getInputCatchments } from "./modules/getInputCatchments.js";
 import { getModels } from "./modules/getModels.js";
+import { getTrainingDatasets } from "./modules/getTrainingDatsets.js";
+
+await getTrainingDatasets()
 
 await getModels()
 
-await getInputCatchment()
+await getInputCatchments()
 
 
 

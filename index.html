@@ -41,6 +41,9 @@
 
     <div id="trainingPage" class="tabContent">
 
+      <label for="trainingDatasets" title="training dataset: number of catchments_number of years"> Choose training Dataset</label> 
+      <select name ="trainingDatasets" id="trainingDatasets"></select> <br> <br>
+
       <input type="text" id="modelName" value="-- Model Name --"> <button type="button" id="train">train</button> <br>
       <br>
       <button type="button" id="save"> Save Trained Model </button> <br> <br>
@@ -52,7 +55,7 @@
       <label title="model: number of catchments trained on_number of training epochs_1st input layer nodes_2nd input layer nodes" for ="model">Select Model</label>
       <select name ="model" id="model"></select><br><br>
 
-      <label title="catchment name_model period" for="inputFile">Select Catchment</label>
+      <label title="catchment name_model period" for="inputFile">Select Catchment</label> <br><br>
       <select name="inputFile" id="inputFile"></select> 
 
      

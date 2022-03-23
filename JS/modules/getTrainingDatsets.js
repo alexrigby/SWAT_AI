@@ -1,9 +1,9 @@
-export async function getModels() {
-    await fetch('http://localhost:8000/getmodels')
+export async function getTrainingDatasets() {
+    await fetch('http://localhost:8000/gettrainingdatasets')
         .then((response) => response.json())
         .then((data) => {
             const fileCount = data.length;
-            const fileList = document.getElementById("model");
+            const fileList = document.getElementById("trainingDatasets");
             for (let i = 0; i < fileCount; i++) {
                 fileList.appendChild(new Option(data[i], data[i]));
             }
@@ -11,5 +11,5 @@ export async function getModels() {
 }
 
 export default {
-    getModels,
+    getTrainingDatasets
 }
