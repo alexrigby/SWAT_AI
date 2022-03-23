@@ -56,8 +56,7 @@ export async function trainModel(model, tensorTrainingInputs, tensorTrainingLabe
         }
     });
 
-    console.log(hs.history)
-    console.log(trainLogs)
+
 
     const valRMSE = trainLogs[epochs -1].validation_rmse
     const trainRMSE = trainLogs[epochs -1].rmse

@@ -31,13 +31,18 @@
 
   <main>
     <div class="tab">
-
+       <button type="button" class="tablinks" id="dataPrepContainer" onclick ="openPage(event, 'dataPrepPage')"> Prepare Data</button>
       <button type="button" class="tablinks" id="trainContainer" onclick="openPage(event, 'trainingPage')"> Train A
         Model </button>
       <button type="button" class="tablinks" id="predictContainer" onclick="openPage(event, 'predictionPage')"> Make
         Predictions </button>
 
     </div> <br>
+
+    <div id="dataPrepPage" class="tabContent">
+      <button type ="button" id="trainingDataPrep">training data</button> <br> <br>
+      <button type ="button" id="inputDataPrep">input catchment</button>
+    </div>
 
     <div id="trainingPage" class="tabContent">
 
