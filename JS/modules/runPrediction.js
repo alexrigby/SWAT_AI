@@ -2,6 +2,7 @@ import { convertInputDataToTensor } from "./convertInputDataToTensor.js";
 import { getInputData } from "./getInputData.js";
 import { predictFlow } from "./predictFlow.js";
 import config from "./config.js";
+import { plotPredictions } from "./plotPredictions.js";
 
 export async function runPrediction(){
       
@@ -14,7 +15,9 @@ export async function runPrediction(){
     
       const model = await tf.loadLayersModel(`${config.MODELS}${predictionModel}`);
 
-      await predictFlow(model, tensorInputs, inputData, inputCatchment);
+     const flowPredictions = await predictFlow(model, tensorInputs, inputData, inputCatchment);
+
+     plotPredictions(flowPredictions, inputCatchment)
 
 
 }

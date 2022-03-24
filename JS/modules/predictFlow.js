@@ -17,19 +17,13 @@ export async function predictFlow(model, tensorInputs, inputData, inputCatchment
         return { x: d.index, y: preds[i] }
     }).sort((a, b) => a.x - b.x);
 
-    const predictedVsDate = inputData.map((d, i) => {
-        return {
-            index: d.index, 
-            predictedFlow: preds[i],
-            date: d.xs[5] + '/' + d.xs[4] + '/' + d.xs[6],
-        }  
-    }) .sort((a, b) => a.index - b.index);
-    // return { x: d.xs[5] + '/' + d.xs[4] + '/' + d.xs[6], y: preds[i], index: d.index }
-
+   
+      
     const SWATFlow = inputData.map((d) => {
         return { x: d.index, y: d.xs[20] }
     }).sort((a, b) => a.x - b.x);
-    console.log(inputData)
+   
+    
 
     //render line chart with both predicted and training output data on it
     tfvis.render.linechart(
@@ -52,7 +46,22 @@ export async function predictFlow(model, tensorInputs, inputData, inputCatchment
         }
     }
 
-    var csv = TsvOrCsvConverter(predictedVsDate, ',')
+    const flowVsDate = inputData.map((d, i) => {
+        return {
+            index: d.index, 
+            predictedFlow: preds[i],
+            SWATFlow: d.xs[20],
+            date: d.xs[6] + '-' + d.xs[4] + '-' + d.xs[5],
+        }  
+    }) .sort((a, b) => a.index - b.index);
+    // return { x: d.xs[5] + '/' + d.xs[4] + '/' + d.xs[6], y: preds[i], index: d.index }
+
+    for (let j = 0; j < flowVsDate.length; j++) {
+        delete flowVsDate[j].index
+      };
+
+
+    var csv = TsvOrCsvConverter(flowVsDate, ',')
 
     const downloadButton = document.getElementById("downloadPreds");
     downloadButton.addEventListener("click", () => {
@@ -60,6 +69,10 @@ export async function predictFlow(model, tensorInputs, inputData, inputCatchment
     });
 
     console.log(csv)
+
+    return flowVsDate
+
+  
 
 }
 

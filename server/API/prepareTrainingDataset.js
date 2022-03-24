@@ -15,34 +15,40 @@ const {
 } = require("./lib/index.js");
 
 
-const startDate = '01/01/2008'
-const endDate = '31/12/2008'
+const startDate = '01/01/1000'
+const endDate = '31/12/3000'
 
 
-const CATCHMENTS_DIR = "../assets/catchments/";
+const CATCHMENTS_DIR = `../assets/SWATTrainingCatchments/`;
+const WATERSHED_TEXT = "watershed/Text/";
+const TXTINOUT = `Scenarios/Default/TxtInOut/`;
 const REFERENCE_DIR = "../assets/reference/";
-const LU_CODES_FILE = `${REFERENCE_DIR}landuse-codes.csv`;
-const SOIL_CODES_FILE = `${REFERENCE_DIR}soil-codes.csv`;
-const BASIN_WATER_BALANCE = "basin_wb_day.csv";
-const FLOW_OUT_FILE_SUFFIX = "_dly_flo.csv";
-const LU_SOIL_TOPO_FILE = "LanduseSoilSlopeRepSwat.txt";
-const TOPO_FILE = "TopoRep.txt";
-const BASIN_PLANT_WEATHER = "basin_pw_day.csv";
-const CHANNEL_SD = "channel_sd_day.csv";
-const CHANDEG = "chandeg.con"
-const OUT_FILE = "../assets/out/out.csv";
+const LU_CODES_FILE = `${REFERENCE_DIR}/SWATCodes/landuse-codes.csv`;
+const SOIL_CODES_FILE = `${REFERENCE_DIR}/SWATCodes/soil-codes.csv`;
+const BASIN_WATER_BALANCE = `${TXTINOUT}basin_wb_day.csv`;
+const FLOW_DIR = `${REFERENCE_DIR}flowObservations/`
+const FLOW_OUT_FILE_SUFFIX = `_dly_flo.csv`;
+const LU_SOIL_TOPO_FILE = `${WATERSHED_TEXT}LanduseSoilSlopeRepSwat.txt`;
+const TOPO_FILE = `${WATERSHED_TEXT}TopoRep.txt`;
+const BASIN_PLANT_WEATHER = `${TXTINOUT}basin_pw_day.csv`;
+const CHANNEL_SD = `${TXTINOUT}channel_sd_day.csv`;
+const CHANDEG = `${TXTINOUT}chandeg.con`;
+const TRAINING_DATASETS = "../assets/trainingDatasets";
 
 const rfsOpts = {
   encoding: "utf8",
 };
 
 
+
 // Array of catchment directory names
 const catchments = readdirSync(path.resolve(__dirname, CATCHMENTS_DIR));
 
+const numberOfCatchments = catchments.length
 
 function prep() {
   let catchmentsDataset = []
+  
   for (let i = 0; i < catchments.length; i++) {
     let currentCatchment =  catchments[i];
   
@@ -105,11 +111,12 @@ function prep() {
     // Flow Out
     let flowOut = parseFlo(
       readFileSync(
-        path.resolve(__dirname, catchmentDir, currentCatchment + FLOW_OUT_FILE_SUFFIX),
+        path.resolve(__dirname, FLOW_DIR, currentCatchment + FLOW_OUT_FILE_SUFFIX),
         rfsOpts
       ),
       basinWb, basinArea
     );
+
 
 
 
@@ -211,7 +218,7 @@ function prep() {
     catchmentsDataset.push(cd)
 
   }
-  console.log(catchments.length + ' Catchments added to the dataset, checkout the "out" directory!')
+  console.log(catchments.length + ' Catchments added to the dataset, checkout the "trainingDatasets" directory!')
    
   return csvConverter(catchmentsDataset.flat(catchments.length))
 
@@ -253,7 +260,7 @@ module.exports =() => {
   
    let dataset = prep();
 
-  writeFileSync( path.resolve(__dirname, OUT_FILE) , dataset)
+  writeFileSync( path.resolve(__dirname, TRAINING_DATASETS, `${numberOfCatchments}Catchments.csv`) , dataset)
 }
 
 // run();
