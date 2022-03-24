@@ -1,4 +1,4 @@
-const d3 = require("d3-node");
+const {d3} = require("d3-node");
 
 //checks for word in string
 const hasWord = (str, word) => str.split(/\s+/).includes(word);

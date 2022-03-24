@@ -1,4 +1,5 @@
 const path = require("path");
+const d3 = require("d3-node");
 const { readdirSync, readFileSync, writeFileSync } = require("fs");
 const {
   cleanCSV,
@@ -43,9 +44,9 @@ const catchments = readdirSync(path.resolve(__dirname, CATCHMENTS_DIR));
 function prep() {
   let catchmentsDataset = []
   for (let i = 0; i < catchments.length; i++) {
-    let currentCatchment =  catchments[i] + '/';
+    let currentCatchment =  catchments[i];
   
-    let catchmentDir = path.resolve(__dirname, CATCHMENTS_DIR, currentCatchment);
+    let catchmentDir = path.resolve(__dirname, CATCHMENTS_DIR, currentCatchment + '/');
 
    
     let mainChannel = getMainChannel(
@@ -55,17 +56,17 @@ function prep() {
 
     // Basin water balance
     let basinWb = prepareWbCSV(
-      readFileSync(`${catchmentDir}${BASIN_WATER_BALANCE}`, rfsOpts)
+      readFileSync(path.resolve(__dirname, catchmentDir, BASIN_WATER_BALANCE), rfsOpts)
     );
 
     let basinPw = preparePwCSV(
-      readFileSync(`${catchmentDir}${BASIN_PLANT_WEATHER}`, rfsOpts)
+      readFileSync(path.resolve(__dirname, catchmentDir, BASIN_PLANT_WEATHER), rfsOpts)
     );
 
-    let basinArea = parseLUSoilSlope(readFileSync(`${catchmentDir}${LU_SOIL_TOPO_FILE}`, rfsOpts)).basinArea;
+    let basinArea = parseLUSoilSlope(readFileSync(path.resolve(__dirname, catchmentDir, LU_SOIL_TOPO_FILE), rfsOpts)).basinArea;
 
     let swatFlow = prepareChannelCSV(
-      readFileSync(`${catchmentDir}${CHANNEL_SD}`, rfsOpts), basinArea, mainChannel
+      readFileSync(path.resolve(__dirname, catchmentDir, CHANNEL_SD), rfsOpts), basinArea, mainChannel
       );
 
     let basinMerged = []
@@ -77,34 +78,34 @@ function prep() {
 
 
     // Parse LU Codes
-    let luCodes = parseRefList(readFileSync(LU_CODES_FILE, rfsOpts));
+    let luCodes = parseRefList(readFileSync(path.resolve(__dirname, LU_CODES_FILE), rfsOpts));
     let luCodeCount = luCodes.length
 
 
     // Parse Soil Codes
-    let soilCodes = parseRefList(readFileSync(SOIL_CODES_FILE, rfsOpts));
+    let soilCodes = parseRefList(readFileSync(path.resolve(__dirname, SOIL_CODES_FILE), rfsOpts));
     let soilCodeCount = soilCodes.length
 
     // // Parse lu, soil, topo and water data
-    let lu = parseLUSoilSlope(readFileSync(`${catchmentDir}${LU_SOIL_TOPO_FILE}`, rfsOpts)).landuse
+    let lu = parseLUSoilSlope(readFileSync(path.resolve(__dirname, catchmentDir, LU_SOIL_TOPO_FILE), rfsOpts)).landuse
 
 
-    let soil = parseLUSoilSlope(readFileSync(`${catchmentDir}${LU_SOIL_TOPO_FILE}`, rfsOpts)).soil;
+    let soil = parseLUSoilSlope(readFileSync(path.resolve(__dirname, catchmentDir, LU_SOIL_TOPO_FILE), rfsOpts)).soil;
 
 
-    let slope = parseLUSoilSlope(readFileSync(`${catchmentDir}${LU_SOIL_TOPO_FILE}`, rfsOpts)).slope;
+    let slope = parseLUSoilSlope(readFileSync(path.resolve(__dirname, catchmentDir, LU_SOIL_TOPO_FILE), rfsOpts)).slope;
     let slopeBandCount = 3
 
-    let water = parseLUSoilSlope(readFileSync(`${catchmentDir}${LU_SOIL_TOPO_FILE}`, rfsOpts)).water;
+    let water = parseLUSoilSlope(readFileSync(path.resolve(__dirname, catchmentDir,LU_SOIL_TOPO_FILE), rfsOpts)).water;
 
-    let elevation = parseTopo(readFileSync(`${catchmentDir}${TOPO_FILE}`, rfsOpts));
+    let elevation = parseTopo(readFileSync(path.resolve(__dirname, catchmentDir, TOPO_FILE), rfsOpts));
     let elevationBandCount = elevation.length
 
-  
+  console.log(currentCatchment)
     // Flow Out
     let flowOut = parseFlo(
       readFileSync(
-        `${catchmentDir}/${currentCatchment}${FLOW_OUT_FILE_SUFFIX}`,
+        path.resolve(__dirname, catchmentDir, currentCatchment + FLOW_OUT_FILE_SUFFIX),
         rfsOpts
       ),
       basinWb, basinArea
@@ -252,7 +253,7 @@ module.exports =() => {
   
    let dataset = prep();
 
-  writeFileSync( `${OUT_FILE}`, dataset)
+  writeFileSync( path.resolve(__dirname, OUT_FILE) , dataset)
 }
 
 // run();

@@ -6,7 +6,7 @@ const {
     getInputs,
     getModels,
     getTrainingDatasets,
-    // prepareDataset,
+    prepareDataset,
 } = require("./api");
 
 const app = express();
@@ -27,7 +27,7 @@ app.get("/gettrainingdatasets", (_, res) => {
     res.send(getTrainingDatasets());
 });
 
-// app.get("/preparedataset", prepareDataset())
+app.get("/preparedataset", prepareDataset)
 
 
 

@@ -1,7 +1,7 @@
-const d3 = require("d3-node");
+const {d3} = require("d3-node");
 
-module.exports = (txt) => {
-    
+
+function getMainChannel(txt){
         const clean = d3.tsvParse(txt
             // Remove the header line produced by SWAT+ Edito
             .substring(txt.indexOf('\n') + 1)
@@ -18,4 +18,4 @@ module.exports = (txt) => {
         
         };
 
-
+        module.exports = getMainChannel
