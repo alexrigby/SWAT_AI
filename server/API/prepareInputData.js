@@ -195,7 +195,6 @@ function prep(catchment, start, end) {
       delete fullCatchmentData[j].date
     };
 
-  console.log(catchments.length + ' Catchments added to the dataset, checkout the "inputCatchments" directory!')
    
   return csvConverter(fullCatchmentData.flat(catchments.length))
 
@@ -241,7 +240,6 @@ module.exports = (req, res) => {
 
     const startYr = start.substring(start.length - 4)
     const endYr = end.substring(end.length - 4)
-    console.log(start.substring(start.length - 4))
   
    let dataset = prep(catchment, start, end);
 

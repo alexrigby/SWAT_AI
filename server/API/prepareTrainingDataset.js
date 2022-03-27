@@ -271,9 +271,9 @@ module.exports =() => {
    const { dataset, yrs} = prep();
 
    const yrCount = yrs.length.toString()
-   console.log(yrCount)
-
-  writeFileSync( path.resolve(__dirname, TRAINING_DATASETS, `${numberOfCatchments}catchments_${yrCount}yrs.csv`) , dataset)
+  
+  writeFileSync( path.resolve(__dirname, TRAINING_DATASETS, `${numberOfCatchments}catchments_${yrCount}yrs.csv`) , dataset);
+ 
 }
 
 // run();

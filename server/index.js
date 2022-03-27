@@ -39,9 +39,15 @@ app.get("/trainingswatcatchments", (_, res) => {
     res.send(trainingSWATCatchments())
 });
 
-app.get("/preparetrainingdataset", prepareTrainingDataset)
+app.get("/preparetrainingdataset", (req, res) => {
+    prepareTrainingDataset(),
+    res.send({ code: 1, message: "dataset ready" });
+})
 
-app.get("/prepareinputdata", prepareInputData)
+app.get("/prepareinputdata", (req, res) => {
+    prepareInputData(req, res)
+    res.send({code: 1, message: "input catchmnet ready"})
+})
 
 app.post("/savemodel", saveModel)
 
