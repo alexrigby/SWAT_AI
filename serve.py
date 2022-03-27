@@ -2,6 +2,7 @@
 # Inspired by  https://stackoverflow.com/a/25708957/51280
 from http.server import SimpleHTTPRequestHandler
 import socketserver
+import requests
 
 class MyHTTPRequestHandler(SimpleHTTPRequestHandler):
     def end_headers(self):

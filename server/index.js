@@ -8,6 +8,9 @@ const {
     getTrainingDatasets,
     prepareTrainingDataset,
     prepareInputData,
+    saveModel,
+    inputSWATCatchment,
+    trainingSWATCatchments
 } = require("./api");
 
 const app = express();
@@ -28,9 +31,19 @@ app.get("/gettrainingdatasets", (_, res) => {
     res.send(getTrainingDatasets());
 });
 
+app.get("/inputswatcatchments", (_,res) => {
+    res.send(inputSWATCatchment())
+});
+
+app.get("/trainingswatcatchments", (_, res) => {
+    res.send(trainingSWATCatchments())
+});
+
 app.get("/preparetrainingdataset", prepareTrainingDataset)
 
 app.get("/prepareinputdata", prepareInputData)
+
+app.post("/savemodel", saveModel)
 
 
 

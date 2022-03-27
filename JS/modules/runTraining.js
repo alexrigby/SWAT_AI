@@ -9,42 +9,60 @@ import config from "./config.js"
 
 
 export async function runTraining() {
- 
-    const trainingDataset = document.getElementById("trainingDatasets").value
+    document.getElementById("train").addEventListener("click", async () => {
 
-    //gets the csv from a url, maps data to a array xs: inputs, ys:labels (and returns number of features in the dataset for input shape)
-    const { trainingData, numberOfFeatures } = await getTrainingData(`${config.TRAINING_DATASETS}${trainingDataset}`);
+        const trainingDataset = document.getElementById("trainingDatasets").value
 
-
-    //converts the training inputs and lables to tensors to pass to the model
-    const { tensorTrainingInputs, tensorTrainingLabels } = convertTrainingDataToTensor(trainingData, numberOfFeatures);
+        //gets the csv from a url, maps data to a array xs: inputs, ys:labels (and returns number of features in the dataset for input shape)
+        const { trainingData, numberOfFeatures } = await getTrainingData(`${config.TRAINING_DATASETS}${trainingDataset}`);
 
 
-    tfvis.visor().toggleFullScreen()
-
-    //extracts inputs and lables created in convertToTensor function
-    // Create the model
-    const model = createModel(numberOfFeatures);
+        //converts the training inputs and lables to tensors to pass to the model
+        const { tensorTrainingInputs, tensorTrainingLabels } = convertTrainingDataToTensor(trainingData, numberOfFeatures);
 
 
-    //modelSummary gives a table of the layers in the model
-    tfvis.show.modelSummary({ name: 'Model Summary' }, model);
+        tfvis.visor().toggleFullScreen()
 
-    tfvis.show.layer({ name: 'Layer Summary' }, model)
-    // Train the model
+        //extracts inputs and lables created in convertToTensor function
+        // Create the model
+        const model = createModel(numberOfFeatures);
 
-    await trainModel(model, tensorTrainingInputs, tensorTrainingLabels);
-    console.log('Done Training');
 
-    // Make some predictions using the model and compare them to the
-    // original data
-    await testModel(model, trainingData);
+        //modelSummary gives a table of the layers in the model
+        tfvis.show.modelSummary({ name: 'Model Summary' }, model);
+
+        tfvis.show.layer({ name: 'Layer Summary' }, model)
+        // Train the model
+
+
+        await trainModel(model, tensorTrainingInputs, tensorTrainingLabels);
+        console.log('Done Training');
+
+
+        // Make some predictions using the model and compare them to the
+        // original data
+        await testModel(model, trainingData);
+
+        const inputNodes = document.getElementById("inputNodes").value
+        const hiddenNodes = document.getElementById("hiddenNodes").value
+        const inputActivation = document.getElementById("inputActivation").value
+        const hiddenActivation = document.getElementById("hiddenActivation").value
+        const epochs = document.getElementById("epochs").value
+        const numOfCatchments = trainingDataset.substring(0,2);
+    
+        const modelName = `${numOfCatchments}_${epochs}e_${inputNodes}${inputActivation}_${hiddenNodes}${hiddenActivation}`
+    
+        document.getElementById("modelName").value = modelName
+        console.log(modelName)
+    });
+
+  
 
     document.getElementById("save").addEventListener("click", async () => {
         const modelName = document.getElementById("modelName").value;
-        await model.save('downloads://' + modelName);
+        await model.save('downloads://' + modelName)
+
     })
-   
 }
 
 export default {

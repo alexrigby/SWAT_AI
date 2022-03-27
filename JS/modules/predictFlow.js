@@ -25,17 +25,17 @@ export async function predictFlow(model, tensorInputs, inputData, inputCatchment
    
     
 
-    //render line chart with both predicted and training output data on it
-    tfvis.render.linechart(
-        { name: inputCatchment , styles: { width: 1000 } },
-        { values: [predictedVsIndexArray, SWATFlow], series: ["predicted", "SWAT Uncalibrated"], styles: { color: ["rgba(255, 0, 0, 0.5)", "rgba(0, 0, 255, 0.5)"] } },
-        {
-            xLabel: 'index',
-            yLabel: 'flow mm/day',
-            height: 300,
-            width: 1000,
-        }
-    );
+    // //render line chart with both predicted and training output data on it
+    // tfvis.render.linechart(
+    //     { name: inputCatchment , styles: { width: 1000 } },
+    //     { values: [predictedVsIndexArray, SWATFlow], series: ["predicted", "SWAT Uncalibrated"], styles: { color: ["rgba(255, 0, 0, 0.5)", "rgba(0, 0, 255, 0.5)"] } },
+    //     {
+    //         xLabel: 'index',
+    //         yLabel: 'flow mm/day',
+    //         height: 300,
+    //         width: 1000,
+    //     }
+    // );
 
 
 
@@ -68,7 +68,7 @@ export async function predictFlow(model, tensorInputs, inputData, inputCatchment
         downloadPredictionsCSV(csv, "predictions")
     });
 
-    console.log(csv)
+    // console.log(csv)
 
     return flowVsDate
 

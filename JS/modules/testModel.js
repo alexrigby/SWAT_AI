@@ -18,11 +18,10 @@ export async function testModel(model,  trainingData) {
         }
         });
 
-
     //render line chart with both predicted and training output data on it
     tfvis.render.linechart(
-        { name: 'training and predicted data', styles: { width: 1000 } },
-        { values: [ trainingVsIndexArray], series: [ "training" ], styles: { color: ["rgba(255, 0, 0, 0.5)", "rgba(0, 0, 255, 0.5)"] } },
+        { name: 'Training Flow (mm/day)', styles: { width: 1000 } },
+        { values: [ trainingVsIndexArray], series: [ "flow" ], styles: { color: ["rgba(255, 0, 0, 0.5)", "rgba(0, 0, 255, 0.5)"] } },
         {
             xLabel: 'index',
             yLabel: 'flow',
@@ -31,56 +30,7 @@ export async function testModel(model,  trainingData) {
         }
     );
 
-    // //calculates the difference between the predicted points and the training points,
-    // //creates an array of difference and index to be plotted
-    // const differenceArray = []
-
-    // for (var i = 0; i < preds.length; i++) {
-    //     const difference = diff(predictedVsIndexArray[i].y, trainingVsIndexArray[i].y);
-    //     let o = {}
-    //     o.y = difference;
-    //     o.x = i;
-    //     differenceArray.push(o)
-    // }
-
-    //plots the difference between the predicted and training
-    // tfvis.render.linechart(
-    //     { name: 'predicted data - training data', styles: { width: 1000 } },
-    //     { values: [differenceArray] },
-    //     {
-    //         xLable: 'index',
-    //         yLabel: 'difference',
-    //         height: 300,
-    //         width: 1000
-    //     }
-    // );
-
-    
-    // for (let i = 0; i< predictedVsIndexArray.length; i++) {
-    //     if (predictedVsIndexArray[i].x < 0) {
-    //         return predictedVsIndexArray[i].x == 0
-    //     }
-    // }
-    
-    // var csv = TsvOrCsvConverter(predictedVsIndexArray, ',')
-
-
-    // console.log(csv)
-    // return csv
-
 }
-
-
-
-function TsvOrCsvConverter(data, seperator) {
-    // Convert dataset to TSV and print
-    const headers = Object.keys(data[0]);
-    const csv = [
-      headers.join(seperator),
-      ...data.map(row => headers.map(fieldName => row[fieldName]).join(seperator))
-    ].join('\r\n');
-    return csv;
-  }
 
 
 export default {

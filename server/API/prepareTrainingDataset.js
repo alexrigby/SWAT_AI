@@ -207,7 +207,7 @@ function prep() {
     }
 
     //removes entries where flow -999 (NRFA give value -999 for missing data) 
-    let cd = fullCatchmentData.filter(d => d.flowMCubed !== '-999888' && d.flowMCubed !== 'weergerger')
+    let cd = fullCatchmentData.filter(d => d.flowMCubed !== '-999' && d.flowMCubed !== '')
     
     //loops over data and removes the flowout in m3
     for (let j = 0; j < cd.length; j++) {
@@ -216,11 +216,21 @@ function prep() {
     };
     
     catchmentsDataset.push(cd)
-
+ 
   }
+  
+  const flat = catchmentsDataset.flat(catchments.length)
+  const yrs = flat.map(d => d.yr)
+  const uniqueYrs = [...new Set(yrs)]
+  
+
+  
   console.log(catchments.length + ' Catchments added to the dataset, checkout the "trainingDatasets" directory!')
    
-  return csvConverter(catchmentsDataset.flat(catchments.length))
+  return {
+    dataset: csvConverter(flat),
+    yrs: uniqueYrs
+  }
 
 };
 
@@ -258,9 +268,12 @@ function prepareChannelCSV(data, basinArea, mainChannel) {
 
 module.exports =() => {
   
-   let dataset = prep();
+   const { dataset, yrs} = prep();
 
-  writeFileSync( path.resolve(__dirname, TRAINING_DATASETS, `${numberOfCatchments}Catchments.csv`) , dataset)
+   const yrCount = yrs.length.toString()
+   console.log(yrCount)
+
+  writeFileSync( path.resolve(__dirname, TRAINING_DATASETS, `${numberOfCatchments}catchments_${yrCount}yrs.csv`) , dataset)
 }
 
 // run();

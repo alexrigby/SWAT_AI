@@ -3,7 +3,7 @@ export function plotPredictions(data, inputCatchment ){
   console.log(data) //vega-lite used to plot the time series
    var original = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    title: inputCatchment,
+    title: inputCatchment + " Flow (mm/day)",
     data: { values: data },
     repeat: {
       layer: ["predictedFlow", "SWATFlow"],

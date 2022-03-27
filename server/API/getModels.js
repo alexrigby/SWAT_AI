@@ -4,7 +4,7 @@ const { config } = require("./config");
 
 module.exports = () => {
 
-    const files = readdirSync(path.resolve(__dirname, config().ml_models),
+    const files = readdirSync(path.resolve(__dirname, config().saved_models),
         { withFileTypes: true },
     )
         .map((dirent) => dirent.name);

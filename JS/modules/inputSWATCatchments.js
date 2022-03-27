@@ -1,9 +1,9 @@
-export async function getModels() {
-    await fetch('http://localhost:8000/getmodels')
+export async function inputSWATCatchments() {
+    await fetch('http://localhost:8000/inputswatcatchments')
         .then((response) => response.json())
         .then((data) => {
             const fileCount = data.length;
-            const fileList = document.getElementById("model");
+            const fileList = document.getElementById("prepInputData");
 
             for (let i = 0; i< fileCount; i++) {
                 fileList.remove(fileList[i])
@@ -16,5 +16,5 @@ export async function getModels() {
 }
 
 export default {
-    getModels,
+    inputSWATCatchments
 }
