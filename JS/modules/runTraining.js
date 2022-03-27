@@ -34,35 +34,28 @@ export async function runTraining() {
         tfvis.show.layer({ name: 'Layer Summary' }, model)
         // Train the model
 
-
-        await trainModel(model, tensorTrainingInputs, tensorTrainingLabels);
-        console.log('Done Training');
-
-
-        // Make some predictions using the model and compare them to the
-        // original data
-        await testModel(model, trainingData);
-
         const inputNodes = document.getElementById("inputNodes").value
         const hiddenNodes = document.getElementById("hiddenNodes").value
         const inputActivation = document.getElementById("inputActivation").value
         const hiddenActivation = document.getElementById("hiddenActivation").value
         const epochs = document.getElementById("epochs").value
-        const numOfCatchments = trainingDataset.substring(0,2);
-    
+        const numOfCatchments = trainingDataset.substring(0, 2);
+
         const modelName = `${numOfCatchments}_${epochs}e_${inputNodes}${inputActivation}_${hiddenNodes}${hiddenActivation}`
-    
+
         document.getElementById("modelName").value = modelName
-        console.log(modelName)
+
+        await trainModel(model, tensorTrainingInputs, tensorTrainingLabels);
+
+        document.getElementById("save").addEventListener("click", async () => {
+            const modelName = document.getElementById("modelName").value;
+            await model.save('downloads://' + modelName)
+
+        })
+
     });
 
-  
 
-    document.getElementById("save").addEventListener("click", async () => {
-        const modelName = document.getElementById("modelName").value;
-        await model.save('downloads://' + modelName)
-
-    })
 }
 
 export default {

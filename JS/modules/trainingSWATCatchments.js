@@ -9,10 +9,15 @@ export async function trainingSWATCatchments() {
          
             fileList.innerHTML =""
             
-            for (let i = 0; i < fileCount; i++) {
-                fileList.innerHTML = `${i + 1}. ${data[i]} </br>`
-           
-            }
+            var str = '<ol>'
+
+            data.forEach(function(data) {
+                str += '<li>'+ data + '</li>';
+              }); 
+              
+              str += '</ol>';
+              fileList.innerHTML = str;
+        
         })
 }
 

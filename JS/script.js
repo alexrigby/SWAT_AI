@@ -48,7 +48,10 @@ await prepareInputData()
 
 
 
-await runTraining();
+ await runTraining();
+
+
+
 
 
 

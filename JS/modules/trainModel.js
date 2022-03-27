@@ -68,7 +68,6 @@ export async function trainModel(model, tensorTrainingInputs, tensorTrainingLabe
     Validation MAE: ${valMAE} <br>
     Training MAE: ${trainMAE}`
   
-    return hs
 
 }
 
