@@ -81,14 +81,15 @@ header div {
   }
 
 #downloadPreds {
-    background-color: #555;
+  background-color: #0068c1; 
+  font-weight: bold; 
+  text-align: center;
     color: white;
     cursor: pointer;
-    margin: 2px;
-    opacity: 0.8;
-    padding: 3px;
-    border-radius: 2%;
-    opacity: 0.4;
+    margin: 6px;
+    /* opacity: 0.9; */
+    padding: 8px;
+    opacity: 0.5;
 
   }
 

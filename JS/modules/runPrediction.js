@@ -21,6 +21,8 @@ export async function runPrediction(){
 
      plotPredictions(flowPredictions, inputCatchment)
 
+     document.getElementById("downloadPreds").style.display = "block"
+
      
 
 }
