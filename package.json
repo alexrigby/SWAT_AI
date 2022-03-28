@@ -1,0 +1,20 @@
+{
+  "name": "tensorflow-tutorial1.1",
+  "version": "1.0.0",
+  "description": "Test TensorFlow",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "swat ai": "python serve.py",
+    "swat ai server": "node .\\server"
+  },
+  "author": "Alex Rigby",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "d3": "^7.3.0",
+    "d3-node": "^2.2.3",
+    "express": "^4.17.3",
+    "fs-extra": "^10.0.1"
+  }
+}

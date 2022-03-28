@@ -1,25 +1,178 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>TensorFlow.js Tutorial</title>
 
+<head>
+  <title>SWAT+ AI
+  </title>
+
+  <link rel="stylesheet" type="text/CSS" href="CSS/main.css" />
   <!-- Import TensorFlow.js -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
   <!-- Import tfjs-vis -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script>
   <script src="https://d3js.org/d3.v6.min.js"></script>
   <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+  <script type='module' src="JS/script.js"></script>
+  <!-- <script type="module" src="JS/modules/openPage.js"></script> -->
+
+  <!-- vega lite for visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.19.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.0.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.15.1"></script>
 </head>
+
 <body>
   <!-- Import the main script file -->
 
-  <script type='module' src="JS/script.js"></script>
- 
-  <!-- <label title="inputnames">input</label> <br>
-  <select title="inputnames" id="inputNames"></select> <br>
-  <label title="outputnames">output</label> <br>
-  <select title="outptnames" id="outputNames"></select> <br> <br> -->
 
-  <button type="button" id="run">run</button>
+  <header>
+
+    <div class="logo">SWAT+ AI</div>
+    <div class="logo2">Predict Flow in Ungauged Catchments</div>
+
+  </header>
+
+  <br>
+
+  <main>
+    <div class="tab">
+      <button type="button" class="tablinks" id="dataPrepContainer"> Prepare
+        Data</button>
+      <button type="button" class="tablinks" id="trainContainer"> Train AI
+        Model </button>
+      <button type="button" class="tablinks" id="predictContainer"> Make
+        Predictions </button>
+
+    </div> <br>
+
+    <div id="dataPrepPage" class="tabContent" style="display: none">
+      <div class="box">
+        <h2>Prepare Training Dataset</h2>
+        <p><em> Compile a dataset from all catchments in the correct format to train an Artificial Neural Network </em>
+        </p>
+        <p>Training Catchments:</p>
+        <p id="trainingCatchments">
+        </p>
+        <button type="button" id="trainingDataPrep">prep training dataset</button>
+      </div>
+      <h2>Prepare Input Catchment</h2>
+      <p><em>Choose an input uncalibrated SWAT+ catchment and prediction start/end date </em></p>
+
+      <label for="prepInputData">Catchment</label>
+      <select name="prepInputData" id="prepInputData">
+      </select><br> <br>
+      <label for="startDate"> Start Date</label>
+      <input type="text" id="startDate" value="01/01/2001"> <br> <br>
+      <label for="endDate">End Date</label>
+      <input type="text" id="endDate" value="31/12/2010"> <br><br>
+      <button type="button" id="inputDataPrep">prep input catchment</button>
+
+    </div>
+
+    <div id="spinner"></div>
+
+    <div id="trainingPage" class="tabContent" style="display: none">
+       
+      <p> <em>The model is an ANN with one hidden layer (also known as a Multilayer Perceptron). <br> 
+      Train a new model or go to 'Make Predictions' to predict flow using an existing model </em></p>
+
+      <h2>Model Architecture</h2>
+      <p><em>Control model paramaters to optimize prediction Accuracy </em></p>
+
+      <label for="Epochs">Epochs</label>
+      <input type="number" id="epochs" value="50"> <br> <br>
+
+      <label for="">Input Layer:</label> <br>
+      <label for="inputNodes">Nodes</label>
+      <input type="number" id="inputNodes" value="22"> <br>
+      <label for="InputActivation">Activation</label>
+      <select name="inputActivation" id="inputActivation">
+        <option value="ReLU" selected>ReLU</option>
+        <option value="sigmoid">sigmoid</option>
+        <option value="relu6">relu6</option>
+        <option value="elu">elu</option>
+        <option value="hardSigmoid">hardSigmoid</option>
+        <option value="linear">linear</option>
+        <option value="selu">selu</option>
+        <option value="softmax">softmax</option>
+        <option value="softplus">softplus</option>
+        <option value="softsign">softsign</option>
+        <option value="tanh">tanh</option>
+        <option value="swish">swish</option>
+        <option value="mish">mish</option>
+      </select> <br> <br>
+
+      <label for="">Hidden Layer:</label> <br>
+      <label for="hiddenNodes">Nodes</label>
+      <input type="number" id="hiddenNodes" value="14"> <br>
+      <label for="hiddeActivation">Activation</label>
+      <select name="hiddenActivation" id="hiddenActivation">
+        <option value="ReLU" selected>ReLU</option>
+        <option value="sigmoid">sigmoid</option>
+        <option value="relu6">relu6</option>
+        <option value="elu">elu</option>
+        <option value="hardSigmoid">hardSigmoid</option>
+        <option value="linear">linear</option>
+        <option value="selu">selu</option>
+        <option value="softmax">softmax</option>
+        <option value="softplus">softplus</option>
+        <option value="softsign">softsign</option>
+        <option value="tanh">tanh</option>
+        <option value="swish">swish</option>
+        <option value="mish">mish</option>
+      </select> <br> <br>
+
+      <label for="validationSplit">Validation Split (fraction of dataset)</label>
+      <input type="number" id="validationSplit" min="0.0" max="0.9" step="0.1" value="0.1"> <br>
+
+      <h2>Train The Model</h2>
+      <p><em>Choose a dataset preparead in 'Prepare Data' to train the ANN</em></p>
+      <label for="trainingDatasets" title="training dataset: number of catchments_number of years"> Training
+        Dataset</label>
+      <select name="trainingDatasets" id="trainingDatasets"></select> <br>
+      <button type="button" id="train">train</button> <br>
+      <br>
+
+
+      <div id="afterTraining" style="display: none">
+        <h2>Accuracy</h2>
+        <p id="modelAcuracy"></p>
+
+        <h2>Save The Model</h2>
+
+        <p><em>Save the trained model to make use in 'Make Predictions</em></p>
+        <label for="modelName">Model Name</label>
+        <input type="text" id="modelName">
+        <button type="button" id="save"> Save Trained Model </button> <br> <br>
+      </div>
+    </div>
+
+    <div id="predictionPage" style="display: none" class="tabContent">
+
+     <p><em>Select a trained ANN (_main is the default) and an uncalibrated SWAT+ catchment to make flow predictions </em></p>
+     <h2>Predict Flow</h2>
+      <label
+        title="model: number of catchments trained on_number of training epochs_1st input layer nodes_2nd input layer nodes"
+        for="model">Select Model</label>
+      <select name="model" id="model"></select><br><br>
+
+      <label title="catchment name_model period" for="inputFile">Select Catchment</label>
+      <select name="inputFile" id="inputFile"></select> <br><br>
+
+      <button type="button" id="predict"> predict </button> <br> <br>
+   
+
+
+      <div id="vis" class="timeSeries"></div>
+      <a class="downloadPreds" id="downloadPreds" style="display: none">Download Predictions </a>
+    </div>
+
+
+
 </body>
+<!-- <footer class ="hydrograph"> -->
+
+</footer>
+</main>
+
 </html>
