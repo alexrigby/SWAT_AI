@@ -16,29 +16,7 @@ export async function predictFlow(model, tensorInputs, inputData, inputCatchment
     const predictedVsIndexArray = inputData.map((d, i) => {
         return { x: d.index, y: preds[i] }
     }).sort((a, b) => a.x - b.x);
-
    
-      
-    const SWATFlow = inputData.map((d) => {
-        return { x: d.index, y: d.xs[20] }
-    }).sort((a, b) => a.x - b.x);
-   
-    
-
-    // //render line chart with both predicted and training output data on it
-    // tfvis.render.linechart(
-    //     { name: inputCatchment , styles: { width: 1000 } },
-    //     { values: [predictedVsIndexArray, SWATFlow], series: ["predicted", "SWAT Uncalibrated"], styles: { color: ["rgba(255, 0, 0, 0.5)", "rgba(0, 0, 255, 0.5)"] } },
-    //     {
-    //         xLabel: 'index',
-    //         yLabel: 'flow mm/day',
-    //         height: 300,
-    //         width: 1000,
-    //     }
-    // );
-
-
-
 
     for (let i = 0; i < predictedVsIndexArray.length; i++) {
         if (predictedVsIndexArray[i].x < 0) {

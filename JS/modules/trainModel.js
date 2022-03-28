@@ -67,7 +67,8 @@ export async function trainModel(model, tensorTrainingInputs, tensorTrainingLabe
     Training RMSE: ${trainRMSE} <br>
     Validation MAE: ${valMAE} <br>
     Training MAE: ${trainMAE}`
-  
+    
+    document.getElementById("afterTraining").style.display = "block"
 
 }
 

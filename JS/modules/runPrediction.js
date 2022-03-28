@@ -17,8 +17,11 @@ export async function runPrediction(){
 
      const flowPredictions = await predictFlow(model, tensorInputs, inputData, inputCatchment);
 
+     
+
      plotPredictions(flowPredictions, inputCatchment)
 
+     
 
 }
 

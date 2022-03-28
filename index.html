@@ -46,13 +46,13 @@
     </div> <br>
 
     <div id="dataPrepPage" class="tabContent" style="display: none">
-
+        <div class ="box">
       <h2>Prepare Training Dataset</h2>
       <p>Training Catchments:</p>
       <p id="trainingCatchments">
       </p> 
       <button type="button" id="trainingDataPrep">prep training data</button> 
-       
+    </div>
       <h2>Prepare Input Catchment</h2>
       <button type="button" id="inputDataPrep">prep input catchment</button>
       <select name="prepInputData" id="prepInputData">
@@ -124,7 +124,8 @@
         <br>
 
       </div>
-
+      
+      <div id="afterTraining" style="display: none">
       <h2>Accuracy</h2>
       <p id="modelAcuracy"></p>
 
@@ -132,7 +133,7 @@
       <label for="modelName">Model Name</label>
       <input type="text" id="modelName">
       <button type="button" id="save"> Save Trained Model </button> <br> <br>
-
+    </div>
     </div>
 
     <div id="predictionPage" style="display: none" class="tabContent">
@@ -143,10 +144,8 @@
         for="model">Select Model</label>
       <select name="model" id="model"></select><br><br>
 
-      <label title="catchment name_model period" for="inputFile">Select Catchment</label> <br><br>
-      <select name="inputFile" id="inputFile"></select>
-
-
+      <label title="catchment name_model period" for="inputFile">Select Catchment</label> 
+      <select name="inputFile" id="inputFile"></select> <br><br>
 
       <button type="button" id="predict"> predict </button> <br> <br>
       <a class="downloadPreds" id="downloadPreds">Download Predictions </a>

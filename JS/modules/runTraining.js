@@ -45,7 +45,10 @@ export async function runTraining() {
 
         document.getElementById("modelName").value = modelName
 
-        await trainModel(model, tensorTrainingInputs, tensorTrainingLabels);
+        await trainModel(model, tensorTrainingInputs, tensorTrainingLabels)
+        
+
+        
 
         document.getElementById("save").addEventListener("click", async () => {
             const modelName = document.getElementById("modelName").value;

@@ -1,6 +1,7 @@
 
-export function plotPredictions(data, inputCatchment ){ 
-  console.log(data) //vega-lite used to plot the time series
+export function plotPredictions(data, inputCatchment ){
+
+
    var original = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     title: inputCatchment + " Flow (mm/day)",
@@ -40,5 +41,7 @@ export function plotPredictions(data, inputCatchment ){
       },
     },
   };
+  
   vegaEmbed("#vis", original);
+ 
 }
