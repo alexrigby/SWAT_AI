@@ -1,7 +1,10 @@
+const formidable = require('formidable')
 const http = require("http");
 const express = require("express");
 const cors = require("cors");
+const path = require("path")
 const { config } = require("./config");
+const fs = require("fs")
 const {
     getInputs,
     getModels,
@@ -31,7 +34,7 @@ app.get("/gettrainingdatasets", (_, res) => {
     res.send(getTrainingDatasets());
 });
 
-app.get("/inputswatcatchments", (_,res) => {
+app.get("/inputswatcatchments", (_, res) => {
     res.send(inputSWATCatchment())
 });
 
@@ -41,15 +44,34 @@ app.get("/trainingswatcatchments", (_, res) => {
 
 app.get("/preparetrainingdataset", (req, res) => {
     prepareTrainingDataset(),
-    res.send({ code: 1, message: "dataset ready" });
+        res.send({ code: 1, message: "dataset ready" });
 })
 
 app.get("/prepareinputdata", (req, res) => {
     prepareInputData(req, res)
-    res.send({code: 1, message: "input catchmnet ready"})
+    res.send({ code: 1, message: "input catchmnet ready" })
 })
 
-app.post("/savemodel", saveModel)
+app.post("/savemodel", (req, res, next) => {
+    const form = new formidable.IncomingForm();
+    // const form = formidable({
+    // })
+function fileName(){
+    return 'test'
+}
+    form.options.multiples = true;
+    form.options.keepExtensions = true;
+    form.options.filename = fileName()
+    form.options.uploadDir = path.resolve(__dirname, './assets/models/')
+    form.uploadDir = path.resolve(__dirname, './assets/models/')
+    form.uploaddir = path.resolve(__dirname, './assets/models/')
+
+    // console.log(form.options)
+
+    form.parse(req);
+})
+
+
 
 
 

@@ -53,6 +53,7 @@ export async function runTraining() {
         document.getElementById("save").addEventListener("click", async () => {
             const modelName = document.getElementById("modelName").value;
             await model.save('downloads://' + modelName)
+            // await model.save(`http://localhost:8000/savemodel`)
 
         })
 

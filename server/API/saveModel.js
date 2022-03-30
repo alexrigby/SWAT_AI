@@ -5,14 +5,14 @@ const path = require("path");
 
 // API METHOD: SavePlant
 // Save plant file to disk
-module.exports = (req, res) => {
+module.exports = (files) => {
 
     // let model = req.body.model;
 
         fs.writeFileSync(
           path.resolve(
             __dirname,
-            `${config().saved_models}/test`
+            `${config().saved_models}/${files}`
           ),
         );
 
