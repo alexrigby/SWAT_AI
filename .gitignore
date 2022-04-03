@@ -2,7 +2,7 @@
 build/
 dist/
 node_modules/
-SWATInputCatchments/
-SWATTrainingCatchments/
-trainingDatasets/
-inputData/
+# SWATInputCatchments/
+# SWATTrainingCatchments/
+# trainingDatasets/
+# inputData/

@@ -1,3 +1,6 @@
+//SAVE MODEL TO './assets/models'
+//dosent work yet
+
 const fs = require("fs");
 const { config } = require("./config");
 const path = require("path");

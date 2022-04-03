@@ -1,3 +1,5 @@
+//PREPARES TRAINING DATASET
+
 const path = require("path");
 const d3 = require("d3-node");
 const { readdirSync, readFileSync, writeFileSync } = require("fs");
@@ -117,19 +119,9 @@ function prep() {
       basinWb, basinArea
     );
 
-
-
-
-    // let fieldCount = 1 + luCodeCount + soilCodeCount + slopeBandCount + waterCount + elevationBandCount
-    // let fieldCount = 10 + luCodeCount + soilCodeCount + slopeBandCount + waterCount + elevationBandCount
-    // let fieldHeadings = ['jday', 'mon', 'day', 'yr', 'precip', 'snofall', 'snomelt', 'et', 'date'];
-    // let pwHeadings = ['lai', 'tmx', 'tmn', 'tmpav', 'solarad', 'phubas']
     let fieldHeadings = [];
 
-    // for (let j = 0; j < pwHeadings.length; j++) {
-    //   fieldHeadings.push(pwHeadings[j])
-    // }
-    //loop over lu codes
+ 
     for (let j = 0; j < luCodeCount; j++) {
       fieldHeadings.push(luCodes[j])
     }
@@ -223,8 +215,6 @@ function prep() {
   const yrs = flat.map(d => d.yr)
   const uniqueYrs = [...new Set(yrs)]
   
-
-  
   console.log(catchments.length + ' Catchments added to the dataset, checkout the "trainingDatasets" directory!')
    
   return {
@@ -234,10 +224,9 @@ function prep() {
 
 };
 
-
+//converts flow from m3/s to mm/day
 function convertFlow(d, area) {
   let flowM3 =  (d*1000*24*3600)/area
-  
   return flowM3
 }
 
@@ -265,7 +254,7 @@ function prepareChannelCSV(data, basinArea, mainChannel) {
   return trimChannelJSON(parseChannelCSV(data, mainChannel), startDate, endDate, basinArea)
 }
 
-
+// exports function to prepare trainig dataset
 module.exports =() => {
   
    const { dataset, yrs} = prep();
@@ -276,4 +265,4 @@ module.exports =() => {
  
 }
 
-// run();
+

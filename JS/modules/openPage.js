@@ -1,8 +1,4 @@
-import { getInputCatchments } from "./getInputCatchments.js";
-
-import { getModels } from "./getModels.js";
-import { getTrainingDatasets } from "./getTrainingDatasets.js";
-
+// CONTROLS TAB VEIW 
 
 export async function openPage(evt, pageName) {
   // Declare all variables

@@ -52,24 +52,24 @@ app.get("/prepareinputdata", (req, res) => {
     res.send({ code: 1, message: "input catchmnet ready" })
 })
 
-app.post("/savemodel", (req, res, next) => {
-    const form = new formidable.IncomingForm();
-    // const form = formidable({
-    // })
-function fileName(){
-    return 'test'
-}
-    form.options.multiples = true;
-    form.options.keepExtensions = true;
-    form.options.filename = fileName()
-    form.options.uploadDir = path.resolve(__dirname, './assets/models/')
-    form.uploadDir = path.resolve(__dirname, './assets/models/')
-    form.uploaddir = path.resolve(__dirname, './assets/models/')
+// //not used yet, dosent work
+// app.post("/savemodel", (req, res, next) => {
+//     const form = new formidable.IncomingForm();
 
-    // console.log(form.options)
+// function fileName(){
+//     return 'test'
+// }
+//     form.options.multiples = true;
+//     form.options.keepExtensions = true;
+//     form.options.filename = fileName()
+//     form.options.uploadDir = path.resolve(__dirname, './assets/models/')
+//     form.uploadDir = path.resolve(__dirname, './assets/models/')
+//     form.uploaddir = path.resolve(__dirname, './assets/models/')
 
-    form.parse(req);
-})
+//     // console.log(form.options)
+
+//     form.parse(req);
+// })
 
 
 

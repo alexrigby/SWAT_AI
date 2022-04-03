@@ -1,16 +1,14 @@
-
-
+// PARSES THE DATA FROM THE CATCHMENT DATASETS USING THE TENSORFLOW FUNCTION (TF.DATA.CSV)
 
 export async function getInputData(url) {
     //uses tf.csv function to get csv from a url and parses it as a tf dataset
     const csvDataset = getCSVData(url);
 
-   const numberOfFeatures = (await csvDataset.columnNames()).length
+    const numberOfFeatures = (await csvDataset.columnNames()).length
+
     // Prepare the Dataset for training by 'flattening the dataset' 
-    //xs are the features returend by tf.csv (no labels selected)
     const flattenedDataset = csvDataset.map((xs) => {
-        // Convert xs(features) and ys(labels) from object form (keyed by
-        // column name) to array form.
+        // Convert xs(features) from object form (keyed by column name) to array form.
         return { xs: Object.values(xs)} ;
     });
 

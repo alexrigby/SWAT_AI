@@ -22,8 +22,6 @@
 </head>
 
 <body>
-  <!-- Import the main script file -->
-
 
   <header>
 
@@ -52,7 +50,7 @@
         </p>
         <p>Training Catchments:</p>
         <p id="trainingCatchments"> </p>
-          <!-- <ol >
+        <!-- <ol >
             <li>Cerist</li>
             <li>Dee_New_Inn</li>
             <li>Dwyfor</li>
@@ -85,9 +83,9 @@
     <div id="spinner"></div>
 
     <div id="trainingPage" class="tabContent" style="display: none">
-       
-      <p> <em>The model is an ANN with one hidden layer (also known as a Multilayer Perceptron). <br> 
-      Train a new model or go to 'Make Predictions' to predict flow using an existing model </em></p>
+
+      <p> <em>The model is an ANN with one hidden layer (also known as a Multilayer Perceptron). <br>
+          Train a new model or go to 'Make Predictions' to predict flow using an existing model </em></p>
 
       <h2>Model Architecture</h2>
       <p><em>Control model paramaters to optimize prediction Accuracy </em></p>
@@ -162,8 +160,9 @@
 
     <div id="predictionPage" style="display: none" class="tabContent">
 
-     <p><em>Select a trained ANN (_main is the default) and an uncalibrated SWAT+ catchment to make flow predictions </em></p>
-     <h2>Predict Flow</h2>
+      <p><em>Select a trained ANN (_main is the default) and an uncalibrated SWAT+ catchment to make flow predictions
+        </em></p>
+      <h2>Predict Flow</h2>
       <label
         title="model: number of catchments trained on_number of training epochs_1st input layer nodes_2nd input layer nodes"
         for="model">Select Model</label>
@@ -173,19 +172,14 @@
       <select name="inputFile" id="inputFile"></select> <br><br>
 
       <button type="button" id="predict"> predict </button> <br> <br>
-   
-
 
       <div id="vis" class="timeSeries"></div>
       <a class="downloadPreds" id="downloadPreds" style="display: none">Download Predictions </a>
     </div>
 
-
-
+  </main>
+  
 </body>
-<!-- <footer class ="hydrograph"> -->
 
-</footer>
-</main>
 
 </html>

@@ -1,7 +1,6 @@
+// VEGA-LITE PLOT OF PREDICTIONS AND SWAT FLOW
 
 export function plotPredictions(data, inputCatchment ){
-
-
    var original = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     title: inputCatchment + " Flow (mm/day)",
@@ -25,7 +24,6 @@ export function plotPredictions(data, inputCatchment ){
           field: { repeat: "layer" },
           type: "quantitative",
           axis: { title: "" },
-          // scale: { domain: [0, axisMax] },
         },
         color: {
           datum: { repeat: "layer" },
@@ -41,7 +39,5 @@ export function plotPredictions(data, inputCatchment ){
       },
     },
   };
-  
   vegaEmbed("#vis", original);
- 
 }

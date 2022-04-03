@@ -1,5 +1,7 @@
-
+//ONCLICK EXTRACTS DATA FROM SWAT+ CATCHMENTS TO PREPARE TRAINING DATASET 
+// data from './server/assets/SWATTrainingCatchments'
 async function prepareDatasetComand() {
+    //loading spinner appers when data is being prepared
     document.querySelector(
         "#spinner"
     ).innerHTML = `<div class="loading"> 

@@ -9,8 +9,6 @@ import { openPage } from "./modules/openPage.js";
 import { inputSWATCatchments } from "./modules/inputSWATCatchments.js";
 import { trainingSWATCatchments } from "./modules/trainingSWATCatchments.js"
 
-await trainingSWATCatchments()
-
 document.getElementById("dataPrepContainer").addEventListener("click", async () => {
     await openPage(event, "dataPrepPage")
     await trainingSWATCatchments()
@@ -29,9 +27,7 @@ document.getElementById("predictContainer").addEventListener("click", async () =
     await getInputCatchments()
 });
 
-
-
-
+await trainingSWATCatchments()
 
 await inputSWATCatchments()
 
@@ -45,14 +41,7 @@ await getInputCatchments()
 
 await prepareInputData()
 
-
-
-
- await runTraining();
-
-
-
-
+await runTraining();
 
 
 document.getElementById("predict").addEventListener("click", async () => {
